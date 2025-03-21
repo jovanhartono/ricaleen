@@ -19,6 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${montserrat.variable} antialiased`}>
+      <meta name="apple-mobile-web-app-title" content="Ricaleen" />
       <body>{children}</body>
     </html>
   );
