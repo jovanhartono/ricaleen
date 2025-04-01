@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
+import Providers from "@/app/providers";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat-sans",
@@ -18,9 +20,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${montserrat.variable} antialiased`}>
+    <html
+      lang="en"
+      className={`${montserrat.variable} antialiased`}
+      suppressHydrationWarning
+    >
       <meta name="apple-mobile-web-app-title" content="Ricaleen" />
-      <body>{children}</body>
+      <Providers>
+        <body>
+          <Toaster position="top-right" />
+          {children}
+        </body>
+      </Providers>
     </html>
   );
 }
