@@ -1,6 +1,6 @@
 "use server";
 
-import { Credentials } from "@/lib/schema/authentication";
+import { type Credentials } from "@/lib/schema/authentication";
 import { AuthError } from "next-auth";
 import { signIn } from "../../auth";
 

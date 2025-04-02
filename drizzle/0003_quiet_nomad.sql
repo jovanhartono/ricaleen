@@ -1,1 +1,0 @@
-ALTER TABLE "article_translations" ADD CONSTRAINT "article_fk" FOREIGN KEY ("articleId") REFERENCES "public"."articles"("id") ON DELETE no action ON UPDATE no action;

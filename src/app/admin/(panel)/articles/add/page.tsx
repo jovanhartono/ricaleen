@@ -10,26 +10,25 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { RadioGroup } from "@/components/ui/radio-group";
 import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import { type Article, articleSchema } from "@/lib/schema/article";
 import { uploadArticle } from "@/service/admin";
-import { LANGUAGE } from "@/types/enum";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RadioGroupItem } from "@radix-ui/react-radio-group";
-import { CheckIcon, Undo2Icon } from "lucide-react";
+import { Undo2Icon } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const formDefaultValues = {
-  title: "",
-  language: LANGUAGE.ID,
-  content: "",
+  titleId: "",
+  titleEn: "",
+  contentId: "",
+  contentEn: "",
 };
 
 export default function AddArticlePage() {
+  const searchParams = useSearchParams();
   const { push } = useRouter();
   const form = useForm({
     resolver: zodResolver(articleSchema),
@@ -69,12 +68,12 @@ export default function AddArticlePage() {
         >
           <FormField
             control={form.control}
-            name="title"
+            name="titleId"
             render={({ field }) => (
               <FormItem className="max-w-lg">
-                <FormLabel>Title</FormLabel>
+                <FormLabel>Title Indonesia</FormLabel>
                 <FormControl>
-                  <Input placeholder="Article title" {...field} />
+                  <Input placeholder="Title" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -83,38 +82,41 @@ export default function AddArticlePage() {
 
           <FormField
             control={form.control}
-            name="language"
-            render={({ field }) => (
-              <FormItem className="max-w-lg space-y-3">
-                <FormLabel>Language</FormLabel>
-                <FormControl>
-                  <RadioGroup
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    className="flex gap-12 *:flex-1"
-                  >
-                    {[LANGUAGE.ID, LANGUAGE.EN].map((language) => (
-                      <RadioGroupItem
-                        key={language}
-                        value={language}
-                        className="group flex cursor-pointer items-center space-x-3 rounded-md border p-3 data-[state=checked]:ring-2 data-[state=checked]:ring-primary"
-                      >
-                        <span>{language}</span>
-                        <CheckIcon className="hidden size-4 group-data-[state=checked]:block" />
-                      </RadioGroupItem>
-                    ))}
-                  </RadioGroup>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="content"
+            name="contentId"
             render={({ field }) => (
               <FormItem>
+                <FormLabel>Content Indonesia</FormLabel>
+                <FormControl>
+                  <RichTextEditor
+                    onChange={field.onChange}
+                    content={field.value}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="titleId"
+            render={({ field }) => (
+              <FormItem className="max-w-lg">
+                <FormLabel>Title English</FormLabel>
+                <FormControl>
+                  <Input placeholder="Title" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="contentEn"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Content English</FormLabel>
                 <FormControl>
                   <RichTextEditor
                     onChange={field.onChange}

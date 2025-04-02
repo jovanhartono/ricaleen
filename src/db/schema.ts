@@ -1,12 +1,9 @@
 import {
-  foreignKey,
   index,
   integer,
-  pgEnum,
   pgTable,
   text,
   timestamp,
-  unique,
   varchar,
 } from "drizzle-orm/pg-core";
 
@@ -21,37 +18,29 @@ export const usersTable = pgTable("users", {
   password: varchar({ length: 255 }).notNull(),
 });
 
-export const articlesTable = pgTable("articles", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  ...timestamps,
-});
-
-export const languageEnum = pgEnum("language", ["EN", "ID"]);
-export const articleTranslationsTable = pgTable(
-  "article_translations",
+export const articlesTable = pgTable(
+  "articles",
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    articleId: integer("article_id")
-      .notNull()
-      .references(() => articlesTable.id, {
-        onDelete: "cascade",
-      }),
-    title: varchar({ length: 255 }).notNull(),
-    language: languageEnum().notNull(),
-    content: text().notNull(),
+    // thumbnail: varchar({ length: 255 }).notNull(),
+    titleId: varchar("title_id", { length: 255 }).notNull(),
+    titleEn: varchar("title_en", { length: 255 }).notNull(),
+    contentId: text("content_id").notNull(),
+    contentEn: text("content_en").notNull(),
     ...timestamps,
   },
-  (table) => [
-    index("article_group_id_idx").on(table.articleId),
-    unique().on(table.articleId, table.language),
-    foreignKey({
-      name: "article_fk",
-      columns: [table.articleId],
-      foreignColumns: [articlesTable.id],
-    }),
-  ],
+  (table) => [index("article_idx").on(table.id)],
 );
 
-// export const articlesRelations = relations(articlesTable, ({ many }) => ({
-//   translations: many(articleTranslationsTable),
-// }));
+export const users = pgTable("users", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity({
+    name: "users_id_seq",
+    startWith: 1,
+    increment: 1,
+    minValue: 1,
+    maxValue: 2147483647,
+    cache: 1,
+  }),
+  username: varchar({ length: 255 }).notNull(),
+  password: varchar({ length: 255 }).notNull(),
+});
