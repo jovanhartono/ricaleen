@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import {
   index,
   integer,
@@ -44,3 +45,49 @@ export const users = pgTable("users", {
   username: varchar({ length: 255 }).notNull(),
   password: varchar({ length: 255 }).notNull(),
 });
+
+export const productsTable = pgTable("products", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  categoryId: integer("category_id").references(() => categoriesTable.id),
+  thumbnail: varchar({ length: 255 }),
+  titleId: varchar("title_id", { length: 255 }),
+  titleEn: varchar("title_en", { length: 255 }),
+  contentId: varchar("content_id", { length: 255 }),
+  contentEn: varchar("content_en", { length: 255 }),
+});
+
+export const categoriesTable = pgTable("categories", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  name: text("name").notNull(),
+  slug: text("slug").notNull().unique(),
+  description: text("description"),
+  thumbnail: varchar({ length: 255 }),
+  // Self-reference to parent category (can be null for top-level categories)
+  parentId: integer("parent_id"),
+});
+
+// Define the relations
+export const categoriesRelations = relations(
+  categoriesTable,
+  ({ one, many }) => ({
+    // Relation to parent category
+    parent: one(categoriesTable, {
+      fields: [categoriesTable.parentId],
+      references: [categoriesTable.id],
+      relationName: "category_parent",
+    }),
+    // Relation to child categories
+    children: many(categoriesTable, {
+      relationName: "category_parent",
+    }),
+
+    products: many(productsTable),
+  }),
+);
+
+export const productsRelations = relations(productsTable, ({ one }) => ({
+  category: one(categoriesTable, {
+    fields: [productsTable.categoryId],
+    references: [categoriesTable.id],
+  }),
+}));

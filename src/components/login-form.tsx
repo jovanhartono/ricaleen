@@ -11,10 +11,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Credentials, loginSchema } from "@/lib/schema/authentication";
+import { type Credentials, loginSchema } from "@/lib/schema/authentication";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { login } from "@/service/user";
+import { login } from "@/service/auth";
 
 export function LoginForm() {
   const searchParams = useSearchParams();

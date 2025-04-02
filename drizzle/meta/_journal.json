@@ -15,6 +15,13 @@
       "when": 1743585106469,
       "tag": "0001_cheerful_steve_rogers",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1743614934306,
+      "tag": "0002_sloppy_silver_fox",
+      "breakpoints": true
     }
   ]
 }
