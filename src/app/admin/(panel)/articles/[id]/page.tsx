@@ -25,12 +25,20 @@ export default async function ArticlePage({
         <Undo2Icon className="size-4" />
         Article
       </Link>
-      <span className="mt-9 text-sm text-muted-foreground">
+      <p className="text-sm text-muted-foreground">
         {dayjs(article.createdAt).format("DD MMMM YYYY")}
-      </span>
+      </p>
+      {article.thumbnail && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={article.thumbnail}
+          alt="article thumbnail"
+          className="w-full rounded"
+        />
+      )}
       <div className="grid grid-cols-2 gap-x-6">
         <div className="flex flex-col">
-          <h1 className="text-3xl font-bold">{article.titleId}</h1>
+          <h1 className="text-3xl font-bold">ID: {article.titleId}</h1>
           <article
             className="prose mt-12"
             dangerouslySetInnerHTML={{
@@ -39,7 +47,7 @@ export default async function ArticlePage({
           />
         </div>
         <div className="flex flex-col">
-          <h1 className="text-3xl font-bold">{article.titleEn}</h1>
+          <h1 className="text-3xl font-bold">EN: {article.titleEn}</h1>
           <article
             className="prose mt-12"
             dangerouslySetInnerHTML={{

@@ -22,7 +22,7 @@ export const articlesTable = pgTable(
   "articles",
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    // thumbnail: varchar({ length: 255 }).notNull(),
+    thumbnail: varchar({ length: 255 }),
     titleId: varchar("title_id", { length: 255 }).notNull(),
     titleEn: varchar("title_en", { length: 255 }).notNull(),
     contentId: text("content_id").notNull(),

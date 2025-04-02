@@ -1,19 +1,21 @@
 "use client";
 
 import { DataTable } from "@/components/ui/data-table";
-import { getArticles } from "@/service/admin";
+import { getArticles, type ArticleDTO } from "@/service/admin";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createColumnHelper } from "@tanstack/react-table";
 import Link from "next/link";
 import dayjs from "dayjs";
+import { buttonVariants } from "@/components/ui/button";
+import { EditIcon } from "lucide-react";
 
-type ArticleDTO = Awaited<ReturnType<typeof getArticles>>[number];
 const columnHelper = createColumnHelper<ArticleDTO>();
 const columns = [
   columnHelper.accessor("titleId", {
     header: "Title ID",
     cell: ({ getValue, row }) => (
       <Link
+        prefetch
         href={`/admin/articles/${row.original.id}`}
         className="font-semibold"
       >
@@ -25,6 +27,7 @@ const columns = [
     header: "Title EN",
     cell: ({ getValue, row }) => (
       <Link
+        prefetch
         href={`/admin/articles/${row.original.id}`}
         className="font-semibold"
       >
@@ -36,6 +39,18 @@ const columns = [
     header: "Created At",
     cell: ({ getValue }) => (
       <div>{dayjs(getValue()).format("DD MMMM YYYY")}</div>
+    ),
+  }),
+  columnHelper.display({
+    id: "action",
+    cell: ({ row }) => (
+      <Link
+        prefetch
+        href={`/admin/articles/${row.original.id}/edit`}
+        className={buttonVariants({ variant: "ghost", size: "icon" })}
+      >
+        <EditIcon className="size-4" />
+      </Link>
     ),
   }),
 ];
