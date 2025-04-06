@@ -10,11 +10,16 @@ import {
   SidebarFooter,
   SidebarGroupLabel,
 } from "@/components/ui/sidebar";
-import { BoxIcon, LogOutIcon, NewspaperIcon } from "lucide-react";
+import { BoxIcon, LogOutIcon, NewspaperIcon, TagIcon } from "lucide-react";
 import { signOut } from "../../auth";
 import Link from "next/link";
 
 const menus = [
+  {
+    label: "Categories",
+    href: "/admin/categories",
+    icon: TagIcon,
+  },
   {
     label: "Products",
     href: "/admin/products",

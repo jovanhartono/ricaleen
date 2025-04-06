@@ -49,12 +49,33 @@ export const users = pgTable("users", {
 export const productsTable = pgTable("products", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   categoryId: integer("category_id").references(() => categoriesTable.id),
-  thumbnail: varchar({ length: 255 }),
   titleId: varchar("title_id", { length: 255 }),
   titleEn: varchar("title_en", { length: 255 }),
   contentId: varchar("content_id", { length: 255 }),
   contentEn: varchar("content_en", { length: 255 }),
 });
+
+export const productThumbnailsTable = pgTable(
+  "product_thumbnails",
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    productId: integer("product_id")
+      .references(() => productsTable.id)
+      .notNull(),
+    url: varchar({ length: 255 }).notNull(),
+  },
+  (table) => [index("product_thumbnail_idx").on(table.id, table.productId)],
+);
+
+export const prodcutThumbnailsRelations = relations(
+  productThumbnailsTable,
+  ({ one }) => ({
+    product: one(productsTable, {
+      fields: [productThumbnailsTable.productId],
+      references: [productsTable.id],
+    }),
+  }),
+);
 
 export const categoriesTable = pgTable("categories", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -85,9 +106,10 @@ export const categoriesRelations = relations(
   }),
 );
 
-export const productsRelations = relations(productsTable, ({ one }) => ({
+export const productsRelations = relations(productsTable, ({ one, many }) => ({
   category: one(categoriesTable, {
     fields: [productsTable.categoryId],
     references: [categoriesTable.id],
   }),
+  thumbnails: many(productThumbnailsTable),
 }));

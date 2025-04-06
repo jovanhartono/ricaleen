@@ -1,6 +1,6 @@
 import { ArticlesTable } from "@/components/articles-table";
 import { buttonVariants } from "@/components/ui/button";
-import { articleOptions } from "@/lib/options";
+import { articleOptions } from "@/lib/query-options";
 import {
   dehydrate,
   HydrationBoundary,

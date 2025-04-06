@@ -22,6 +22,20 @@
       "when": 1743614934306,
       "tag": "0002_sloppy_silver_fox",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1743616021413,
+      "tag": "0003_faulty_stranger",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1743616117478,
+      "tag": "0004_supreme_orphan",
+      "breakpoints": true
     }
   ]
 }
