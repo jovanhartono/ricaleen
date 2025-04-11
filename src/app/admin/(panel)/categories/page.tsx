@@ -53,14 +53,16 @@ export default async function AdminCategoryPage() {
             </CardHeader>
             <CardContent>
               <div className="flex gap-4">
-                <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md border">
-                  <Image
-                    src={category.thumbnail || "/placeholder.svg"}
-                    alt={`${category.name} thumbnail`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+                {category.thumbnail && (
+                  <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md border">
+                    <Image
+                      src={category.thumbnail || "/placeholder.svg"}
+                      alt={`${category.name} thumbnail`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
                 <div className="flex flex-col justify-between">
                   <p className="mb-2 text-sm text-muted-foreground">
                     {category.description}
@@ -78,13 +80,15 @@ export default async function AdminCategoryPage() {
       {categories.length === 0 && (
         <div className="py-10 text-center">
           <p className="mb-4 text-muted-foreground">No categories found</p>
-          <Button
-
-          // onClick={() => setAddDialogOpen(true)}
-          >
-            <PlusCircle className="mr-2 h-4 w-4" />
-            Add your first category
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>
+                <PlusCircle className="mr-2 h-4 w-4" />
+                Add your first category
+              </Button>
+            </DialogTrigger>
+            <AddCategoryDialog />
+          </Dialog>
         </div>
       )}
     </div>

@@ -10,12 +10,24 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RichTextEditor } from "@/components/ui/rich-text-editor";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { ProductForm } from "@/lib/schema/product";
-import { deleteThumbnail } from "@/service/admin";
-import { useMutation } from "@tanstack/react-query";
+import { deleteThumbnail, getCategories } from "@/service/admin";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { upload } from "@vercel/blob/client";
 import { LoaderIcon, TrashIcon } from "lucide-react";
-import { useFormContext, useWatch } from "react-hook-form";
+import {
+  useFieldArray,
+  useFormContext,
+  type FieldArrayWithId,
+  type UseFieldArrayRemove,
+} from "react-hook-form";
 import { toast } from "sonner";
 
 export function ProductForm({
@@ -23,18 +35,34 @@ export function ProductForm({
 }: {
   handleOnSubmit: (product: ProductForm) => void;
 }) {
+  const { data: categories = [] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: getCategories,
+  });
   const form = useFormContext<ProductForm>();
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "thumbnails",
+  });
 
   const uploadMutation = useMutation({
-    mutationFn: async (file: File[]) => {
-      const blob = await upload(file.name, file, {
-        access: "public",
-        handleUploadUrl: "/api/thumbnail/upload",
-      });
-      return blob.url;
+    mutationFn: async (files: FileList) => {
+      const blobs = await Promise.all(
+        Array.from(files).map((file) =>
+          upload(file.name, file, {
+            access: "public",
+            handleUploadUrl: "/api/thumbnail/upload",
+          }),
+        ),
+      );
+
+      return blobs.map(({ url }) => url);
     },
-    onSuccess: (url) => {
-      form.setValue("thumbnail", url);
+    onSuccess: (urls) => {
+      urls.forEach((url) => {
+        append({ url });
+      });
+
       toast.success("Thumbnail uploaded successfully");
     },
     onError: (error) => {
@@ -43,21 +71,11 @@ export function ProductForm({
     },
   });
 
-  const deleteMutation = useMutation({
-    mutationFn: deleteThumbnail,
-  });
-
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const thumbnail = form.getValues("thumbnail");
-    // if (thumbnail) {
-    //   deleteMutation.mutate(thumbnail);
-    // }
+    const files = e.target.files;
+    if (!files) return;
 
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // Upload the file using the mutation
-    uploadMutation.mutate(file);
+    uploadMutation.mutate(files);
   };
 
   // harus ada mekanisme delete
@@ -66,13 +84,14 @@ export function ProductForm({
       <FormField
         control={form.control}
         name="thumbnails"
-        render={({ field: { value, ...field } }) => (
+        render={() => (
           <FormItem>
-            <FormLabel>Thumbnail</FormLabel>
+            <FormLabel>Images</FormLabel>
             <div className="space-y-3">
               <FormControl>
                 <div className="relative max-w-lg">
                   <Input
+                    multiple
                     type="file"
                     accept="image/*"
                     onChange={handleFileChange}
@@ -86,10 +105,38 @@ export function ProductForm({
                   )}
                 </div>
               </FormControl>
-              <ThumbnailGallery />
+              <ThumbnailGallery fields={fields} remove={remove} />
               {/* Hidden input to store the thumbnail URL */}
               {/* <input type="hidden" value={value || ""} {...field} /> */}
             </div>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="categoryId"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Category</FormLabel>
+            <Select
+              onValueChange={(value) => field.onChange(Number(value))}
+              value={field.value?.toString()}
+            >
+              <FormControl>
+                <SelectTrigger className="w-full max-w-lg">
+                  <SelectValue placeholder="Select a category" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {categories.map((category) => (
+                  <SelectItem key={category.id} value={category.id.toString()}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <FormMessage />
           </FormItem>
         )}
@@ -164,27 +211,34 @@ export function ProductForm({
   );
 }
 
-function ThumbnailGallery() {
-  const thumbnails = useWatch<ProductForm, "thumbnails">({
-    name: "thumbnails",
-  });
+function ThumbnailGallery({
+  fields: thumbnails,
+  remove,
+}: {
+  fields: FieldArrayWithId<ProductForm, "thumbnails">[];
+  remove: UseFieldArrayRemove;
+}) {
+  async function handleDelete(index: number, url: string) {
+    remove(index);
+    deleteThumbnail(url);
+  }
 
   if (!thumbnails?.length) return null;
 
   return (
-    <ul className="grid grid-cols-3 gap-2">
-      {thumbnails.map((src, index) => (
-        <li key={index} className="relative">
+    <ul className="grid grid-cols-5 gap-10">
+      {thumbnails.map(({ url }, index) => (
+        <li key={index} className="relative aspect-square">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={src}
-            alt="Thumbnail preview"
+            src={url}
+            alt="Products preview"
             className="w-full rounded object-cover"
           />
           <button
             type="button"
-            className="absolute top-1 right-1 rounded-full bg-red-500 p-1 text-white"
-            // onClick={() => onDelete(src)}
+            className="absolute top-1 right-1 cursor-pointer rounded-full bg-red-500 p-1 text-white"
+            onClick={() => handleDelete(index, url)}
           >
             <TrashIcon className="size-4" />
           </button>

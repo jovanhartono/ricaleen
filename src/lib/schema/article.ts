@@ -7,4 +7,4 @@ export const articleSchema = z.object({
   contentId: z.string().min(1, { message: "Content is Required!" }),
   contentEn: z.string().min(1, { message: "Content is Required!" }),
 });
-export type Article = z.infer<typeof articleSchema>;
+export type ArticleFormValues = z.infer<typeof articleSchema>;

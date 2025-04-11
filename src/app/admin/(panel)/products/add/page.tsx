@@ -1,26 +1,38 @@
 "use client";
 
-import { type Article, articleSchema } from "@/lib/schema/article";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Undo2Icon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { uploadArticle } from "@/service/admin";
 import { Form } from "@/components/ui/form";
 import { ProductForm } from "@/app/admin/(panel)/products/form";
+import {
+  productSchema,
+  type ProductForm as ProductFormType,
+} from "@/lib/schema/product";
+import { createProduct } from "@/service/admin";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function AddProductPage() {
+  const queryClient = useQueryClient();
   const { push } = useRouter();
 
   const form = useForm({
-    resolver: zodResolver(articleSchema),
+    resolver: zodResolver(productSchema),
+    defaultValues: {
+      contentId: "",
+      contentEn: "",
+      titleId: "",
+      titleEn: "",
+      thumbnails: [],
+    },
   });
 
-  async function handleOnSubmit(article: Article) {
+  async function handleOnSubmit(product: ProductFormType) {
     try {
-      // await uploadArticle(article);
+      await createProduct(product);
 
       form.reset();
 
@@ -30,6 +42,10 @@ export default function AddProductPage() {
           onClick: () => push("/admin/products"),
         },
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["products"],
+      });
     } catch {
       toast.error("Upload product Error. Please try again.");
     }
@@ -38,7 +54,7 @@ export default function AddProductPage() {
   return (
     <div className="space-y-9">
       <Link
-        href="/admin/articles"
+        href="/admin/products"
         className="inline-flex items-center gap-x-2 text-sm text-muted-foreground"
       >
         <Undo2Icon className="size-4" />

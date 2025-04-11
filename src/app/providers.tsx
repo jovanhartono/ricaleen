@@ -1,10 +1,21 @@
 "use client";
 
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
   isServer,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import { createContext, useContext, useState, type ReactNode } from "react";
 
 function makeQueryClient() {
   return new QueryClient({
@@ -32,7 +43,81 @@ function getQueryClient() {
   }
 }
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+type ModalContextType = {
+  openModal: (options: ModalOptions) => void;
+  closeModal: () => void;
+  modal: ModalOptions | null;
+};
+
+const AlertDialogContext = createContext<ModalContextType | undefined>(
+  undefined,
+);
+
+type ModalOptions = {
+  title: string;
+  description?: string;
+  onConfirm?: () => void | Promise<void>;
+};
+
+function AlertDialogProvider({ children }: { children: ReactNode }) {
+  const [modal, setModal] = useState<ModalOptions | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const openModal = (options: ModalOptions) => {
+    setModal(options);
+  };
+
+  const closeModal = () => {
+    setModal(null);
+  };
+
+  console.log(loading);
+
+  return (
+    <AlertDialogContext
+      value={{
+        modal,
+        openModal,
+        closeModal,
+      }}
+    >
+      {modal && (
+        <AlertDialog open>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{modal.title}</AlertDialogTitle>
+              <AlertDialogDescription>
+                {modal.description}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                disabled={loading}
+                onClick={async () => {
+                  setLoading(true);
+                  await modal.onConfirm?.();
+                  setLoading(false);
+                }}
+              >
+                Confirm
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
+      {children}
+    </AlertDialogContext>
+  );
+}
+
+export const useModal = () => {
+  const ctx = useContext(AlertDialogContext);
+  if (!ctx) throw new Error("useModal must be used within AlertDialogProvider");
+  return ctx;
+};
+
+export default function Providers({ children }: { children: ReactNode }) {
   // NOTE: Avoid useState when initializing the query client if you don't
   //       have a suspense boundary between this and the code that may
   //       suspend because React will throw away the client on the initial
@@ -40,6 +125,8 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = getQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <AlertDialogProvider>{children}</AlertDialogProvider>
+    </QueryClientProvider>
   );
 }

@@ -6,21 +6,20 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createColumnHelper } from "@tanstack/react-table";
 import Link from "next/link";
 import dayjs from "dayjs";
-import { buttonVariants } from "@/components/ui/button";
-import { EditIcon } from "lucide-react";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { ArticleDetailDialog } from "@/app/admin/(panel)/articles/article-detail-dialog";
+import { EditArticleDialog } from "@/app/admin/(panel)/articles/edit-article-dialog";
+import { DeleteArticleDialog } from "@/app/admin/(panel)/articles/delete-article.dialog";
 
 const columnHelper = createColumnHelper<ArticleDTO>();
 const columns = [
   columnHelper.accessor("titleId", {
     header: "Title ID",
     cell: ({ getValue, row }) => (
-      <Link
-        prefetch
-        href={`/admin/articles/${row.original.id}`}
-        className="font-semibold"
-      >
-        {getValue()}
-      </Link>
+      <Dialog>
+        <DialogTrigger className="font-semibold">{getValue()}</DialogTrigger>
+        <ArticleDetailDialog article={row.original} />
+      </Dialog>
     ),
   }),
   columnHelper.accessor("titleEn", {
@@ -44,13 +43,10 @@ const columns = [
   columnHelper.display({
     id: "action",
     cell: ({ row }) => (
-      <Link
-        prefetch
-        href={`/admin/articles/${row.original.id}/edit`}
-        className={buttonVariants({ variant: "ghost", size: "icon" })}
-      >
-        <EditIcon className="size-4" />
-      </Link>
+      <div className="flex items-center gap-x-2">
+        <EditArticleDialog article={row.original} />
+        <DeleteArticleDialog id={row.original.id} />
+      </div>
     ),
   }),
 ];
