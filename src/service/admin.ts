@@ -13,6 +13,7 @@ import { productSchema } from "@/lib/schema/product";
 import { toSlug } from "@/lib/utils/helper";
 import { del } from "@vercel/blob";
 import { and, eq, getTableColumns } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 export const getArticles = async () => {
   return await db.select().from(articlesTable);
@@ -23,6 +24,8 @@ export const createArticle = async (args: unknown) => {
   try {
     const article = await articleSchema.parseAsync(args);
     await db.insert(articlesTable).values(article);
+
+    revalidatePath("/admin/articles");
   } catch (error) {
     throw error;
   }
@@ -46,8 +49,9 @@ export const updateArticle = async (id: number, args: unknown) => {
       await deleteThumbnail(exitstingArticle.thumbnail);
     }
 
-    // update the article
     await db.update(articlesTable).set(article).where(eq(articlesTable.id, id));
+
+    revalidatePath("/admin/articles");
   } catch (error) {
     throw error;
   }
@@ -69,6 +73,8 @@ export const deleteArticle = async (id: number) => {
     if (existingArticle.thumbnail) {
       deleteThumbnail(existingArticle.thumbnail);
     }
+
+    revalidatePath("/admin/articles");
   } catch (error) {
     throw error;
   }
@@ -121,6 +127,8 @@ export const updateCategory = async (id: number, args: unknown) => {
       .update(categoriesTable)
       .set(category)
       .where(eq(categoriesTable.id, id));
+
+    revalidatePath("/admin/categories");
   } catch (error) {
     throw error;
   }
@@ -168,6 +176,8 @@ export const createProduct = async (args: unknown) => {
         }),
       ),
     );
+
+    revalidatePath("/admin/products");
   } catch (error) {
     throw error;
   }
@@ -219,6 +229,8 @@ export const updateProduct = async (id: number, args: unknown) => {
         }),
       ),
     );
+
+    revalidatePath("/admin/products");
   } catch (error) {
     throw error;
   }
@@ -238,6 +250,8 @@ export const deleteProduct = async (id: number) => {
     thumbnails.forEach(({ url }) => {
       deleteThumbnail(url);
     });
+
+    revalidatePath("/admin/products");
   } catch (error) {
     throw error;
   }

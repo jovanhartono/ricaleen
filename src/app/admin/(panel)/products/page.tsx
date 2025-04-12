@@ -1,13 +1,8 @@
 import { AddProductDialog } from "@/app/admin/(panel)/products/add-product-dialog";
 import { ProductCard } from "@/app/admin/(panel)/products/product-card";
-import { productsOptions } from "@/lib/query-options";
 import { getProducts } from "@/service/admin";
-import { QueryClient } from "@tanstack/react-query";
 
 export default async function AdminProductsPage() {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(productsOptions);
-
   const products = await getProducts();
 
   return (
