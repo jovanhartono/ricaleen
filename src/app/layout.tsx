@@ -26,12 +26,12 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <meta name="apple-mobile-web-app-title" content="Ricaleen" />
-      <Providers>
-        <body>
+      <body>
+        <Providers>
           <Toaster position="top-right" />
           {children}
-        </body>
-      </Providers>
+        </Providers>
+      </body>
     </html>
   );
 }

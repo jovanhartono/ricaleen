@@ -1,5 +1,6 @@
 import { LoginForm } from "@/components/login-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Suspense } from "react";
 
 export default function LoginPage() {
   return (
@@ -9,7 +10,9 @@ export default function LoginPage() {
           <CardTitle className="text-2xl font-semibold">Admin Login</CardTitle>
         </CardHeader>
         <CardContent>
-          <LoginForm />
+          <Suspense>
+            <LoginForm />
+          </Suspense>
         </CardContent>
       </Card>
     </div>

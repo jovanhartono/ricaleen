@@ -71,8 +71,6 @@ function AlertDialogProvider({ children }: { children: ReactNode }) {
     setModal(null);
   };
 
-  console.log(loading);
-
   return (
     <AlertDialogContext
       value={{
