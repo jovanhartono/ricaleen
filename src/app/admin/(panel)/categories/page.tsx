@@ -41,11 +41,9 @@ export default async function AdminCategoryPage() {
               <div className="flex items-center justify-between">
                 <CardTitle>{category.name}</CardTitle>
                 <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="outline" size="sm">
-                      <Pencil className="mr-2 h-4 w-4" />
-                      Edit
-                    </Button>
+                  <DialogTrigger className="flex cursor-pointer items-center">
+                    <Pencil className="mr-2 h-4 w-4" />
+                    Edit
                   </DialogTrigger>
                   <EditCategoryDialog category={category} />
                 </Dialog>

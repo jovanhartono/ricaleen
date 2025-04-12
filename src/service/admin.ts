@@ -12,7 +12,7 @@ import { categorySchema } from "@/lib/schema/category";
 import { productSchema } from "@/lib/schema/product";
 import { toSlug } from "@/lib/utils/helper";
 import { del } from "@vercel/blob";
-import { eq, getTableColumns } from "drizzle-orm";
+import { and, eq, getTableColumns } from "drizzle-orm";
 
 export const getArticles = async () => {
   return await db.select().from(articlesTable);
@@ -32,7 +32,7 @@ export const updateArticle = async (id: number, args: unknown) => {
   try {
     const article = await articleSchema.parseAsync(args);
     // find the thumbnail, if different from the current one, delete the old one
-    const currentArticle = await db
+    const exitstingArticle = await db
       .select()
       .from(articlesTable)
       .where(eq(articlesTable.id, id))
@@ -40,10 +40,10 @@ export const updateArticle = async (id: number, args: unknown) => {
       .then((articles) => articles[0]);
 
     if (
-      currentArticle.thumbnail &&
-      currentArticle.thumbnail !== article.thumbnail
+      exitstingArticle.thumbnail &&
+      exitstingArticle.thumbnail !== article.thumbnail
     ) {
-      await deleteThumbnail(currentArticle.thumbnail);
+      await deleteThumbnail(exitstingArticle.thumbnail);
     }
 
     // update the article
@@ -55,23 +55,24 @@ export const updateArticle = async (id: number, args: unknown) => {
 
 export const deleteArticle = async (id: number) => {
   try {
-    const currentArticle = await db
-      .select()
+    const existingArticle = await db
+      .select({
+        thumbnail: articlesTable.thumbnail,
+      })
       .from(articlesTable)
       .where(eq(articlesTable.id, id))
       .limit(1)
       .then((articles) => articles[0]);
 
-    if (currentArticle.thumbnail) {
-      await deleteThumbnail(currentArticle.thumbnail);
-    }
-
     await db.delete(articlesTable).where(eq(articlesTable.id, id));
+
+    if (existingArticle.thumbnail) {
+      deleteThumbnail(existingArticle.thumbnail);
+    }
   } catch (error) {
     throw error;
   }
 };
-
 
 export const deleteThumbnail = async (url: string) => {
   try {
@@ -100,6 +101,22 @@ export const createCategory = async (args: unknown) => {
 export const updateCategory = async (id: number, args: unknown) => {
   try {
     const category = await categorySchema.parseAsync(args);
+
+    const [existingCategory] = await db
+      .select({
+        thumbnail: categoriesTable.thumbnail,
+      })
+      .from(categoriesTable)
+      .limit(1)
+      .where(eq(categoriesTable.id, id));
+
+    if (
+      existingCategory.thumbnail &&
+      category.thumbnail !== existingCategory.thumbnail
+    ) {
+      deleteThumbnail(existingCategory.thumbnail);
+    }
+
     await db
       .update(categoriesTable)
       .set(category)
@@ -151,6 +168,76 @@ export const createProduct = async (args: unknown) => {
         }),
       ),
     );
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateProduct = async (id: number, args: unknown) => {
+  try {
+    const { thumbnails: updatedThumbnails, ...product } =
+      await productSchema.parseAsync(args);
+
+    await db.update(productsTable).set(product).where(eq(productsTable.id, id));
+
+    const existingThumbnails = await db
+      .select({
+        url: productThumbnailsTable.url,
+      })
+      .from(productThumbnailsTable)
+      .where(eq(productThumbnailsTable.productId, id))
+      .then((res) => res.map(({ url }) => url));
+
+    const removedThumbnails = existingThumbnails.filter((existingThumbnail) =>
+      updatedThumbnails.every(({ url }) => url !== existingThumbnail),
+    );
+
+    await Promise.all(
+      removedThumbnails.map(async (url) => {
+        await db
+          .delete(productThumbnailsTable)
+          .where(
+            and(
+              eq(productThumbnailsTable.productId, id),
+              eq(productThumbnailsTable.url, url),
+            ),
+          );
+
+        await deleteThumbnail(url);
+      }),
+    );
+
+    const newThumbnails = updatedThumbnails.filter((thumbnail) =>
+      existingThumbnails.every((url) => url !== thumbnail.url),
+    );
+
+    await Promise.all(
+      newThumbnails.map(({ url }) =>
+        db.insert(productThumbnailsTable).values({
+          productId: id,
+          url,
+        }),
+      ),
+    );
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteProduct = async (id: number) => {
+  try {
+    const thumbnails = await db
+      .select({
+        url: productThumbnailsTable.url,
+      })
+      .from(productThumbnailsTable)
+      .where(eq(productThumbnailsTable.productId, id));
+
+    await db.delete(productsTable).where(eq(productsTable.id, id));
+
+    thumbnails.forEach(({ url }) => {
+      deleteThumbnail(url);
+    });
   } catch (error) {
     throw error;
   }

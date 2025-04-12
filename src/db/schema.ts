@@ -48,9 +48,11 @@ export const users = pgTable("users", {
 
 export const productsTable = pgTable("products", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  categoryId: integer("category_id").references(() => categoriesTable.id),
-  titleId: varchar("title_id", { length: 255 }),
-  titleEn: varchar("title_en", { length: 255 }),
+  categoryId: integer("category_id")
+    .references(() => categoriesTable.id)
+    .notNull(),
+  titleId: varchar("title_id", { length: 255 }).notNull(),
+  titleEn: varchar("title_en", { length: 255 }).notNull(),
   contentId: varchar("content_id", { length: 255 }).notNull(),
   contentEn: varchar("content_en", { length: 255 }).notNull(),
 });
@@ -60,7 +62,7 @@ export const productThumbnailsTable = pgTable(
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     productId: integer("product_id")
-      .references(() => productsTable.id)
+      .references(() => productsTable.id, { onDelete: "cascade" })
       .notNull(),
     url: varchar({ length: 255 }).notNull(),
   },

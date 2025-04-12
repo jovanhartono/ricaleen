@@ -11,6 +11,6 @@ export const productSchema = z.object({
   contentId: z.string().min(1, { message: "Content is Required!" }),
   contentEn: z.string().min(1, { message: "Content is Required!" }),
   productRelationIds: z.array(z.number()).nullish(),
-  categoryId: z.number().optional(),
+  categoryId: z.number(),
 });
-export type ProductForm = z.infer<typeof productSchema>;
+export type ProductFormValues = z.infer<typeof productSchema>;

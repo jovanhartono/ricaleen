@@ -1,10 +1,9 @@
 "use client";
 
 import { useModal } from "@/app/providers";
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { deleteArticle } from "@/service/admin";
 import { useMutation } from "@tanstack/react-query";
-import { Trash2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -22,10 +21,10 @@ export function DeleteArticleDialog({ id }: { id: number }) {
   });
 
   return (
-    <Button
-      variant="destructive"
-      size="icon"
-      disabled={deleteMutation.isPending}
+    <span
+      className={cn("cursor-pointer text-destructive", {
+        "pointer-events-none": deleteMutation.isPending,
+      })}
       onClick={() => {
         openModal({
           title: "Delete Article",
@@ -37,7 +36,7 @@ export function DeleteArticleDialog({ id }: { id: number }) {
         });
       }}
     >
-      <Trash2Icon />
-    </Button>
+      Delete
+    </span>
   );
 }

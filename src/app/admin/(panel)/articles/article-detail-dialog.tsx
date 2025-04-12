@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { LanguageToggle } from "@/app/admin/(panel)/components/lang-toggle";
 import {
   DialogContent,
   DialogDescription,
@@ -33,22 +33,7 @@ export function ArticleDetailDialog({ article }: { article: ArticleDTO }) {
           <p className="text-sm text-muted-foreground">
             {dayjs(article.createdAt).format("DD MMMM YYYY")}
           </p>
-          <div className="ml-auto flex items-center gap-x-2 p-1.5">
-            <Button
-              size="sm"
-              variant={language === LANGUAGE.ID ? "default" : "outline"}
-              onClick={() => setLanguage(LANGUAGE.ID)}
-            >
-              ID
-            </Button>
-            <Button
-              size="sm"
-              variant={language === LANGUAGE.EN ? "default" : "outline"}
-              onClick={() => setLanguage(LANGUAGE.EN)}
-            >
-              EN
-            </Button>
-          </div>
+          <LanguageToggle language={language} setLanguage={setLanguage} />
         </div>
 
         <h2 className="text-4xl font-semibold">{title}</h2>
@@ -63,6 +48,7 @@ export function ArticleDetailDialog({ article }: { article: ArticleDTO }) {
         )}
 
         <article
+          className="prose"
           dangerouslySetInnerHTML={{
             __html: content,
           }}

@@ -91,7 +91,7 @@ function AlertDialogProvider({ children }: { children: ReactNode }) {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel onClick={closeModal}>Cancel</AlertDialogCancel>
               <AlertDialogAction
                 disabled={loading}
                 onClick={async () => {

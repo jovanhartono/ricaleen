@@ -3,16 +3,27 @@
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import type { ProductDTO } from "@/service/admin";
-import { ChevronLeft, ChevronRight, Trash2 } from "lucide-react";
+import { deleteProduct, type ProductDTO } from "@/service/admin";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { ProductDetailDialog } from "@/app/admin/(panel)/products/product-detail-dialog";
+import { useModal } from "@/app/providers";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { EditProductDialog } from "@/app/admin/(panel)/products/edit-product-dialog";
+import { LanguageToggle } from "@/app/admin/(panel)/components/lang-toggle";
+import { LANGUAGE } from "@/types/enum";
 
 export function ProductCard({ product }: { product: ProductDTO }) {
+  const { refresh } = useRouter();
+  const { openModal, closeModal } = useModal();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const totalImages = product.thumbnails.length;
+
+  const [language, setLanguage] = useState<LANGUAGE>(LANGUAGE.ID);
+  const title = language === LANGUAGE.ID ? product.titleId : product.titleEn;
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % totalImages);
@@ -24,10 +35,27 @@ export function ProductCard({ product }: { product: ProductDTO }) {
     );
   };
 
+  function handleDelete() {
+    openModal({
+      title: "Delete Product",
+      description: "Are you sure you want to delete this product?",
+      onConfirm: async () => {
+        try {
+          await deleteProduct(product.id);
+          toast.success("Product deleted successfully");
+          closeModal();
+          refresh();
+        } catch {
+          toast.error("Failed to delete product");
+        }
+      },
+    });
+  }
+
   return (
     <Card
       key={product.id}
-      className="group relative flex h-full flex-col overflow-hidden"
+      className="group relative flex h-full flex-col overflow-hidden pt-0"
     >
       <div className="relative aspect-square">
         {/*  eslint-disable-next-line @next/next/no-img-element */}
@@ -35,7 +63,7 @@ export function ProductCard({ product }: { product: ProductDTO }) {
           src={product.thumbnails[currentImageIndex] || "/placeholder.svg"}
           alt={`${product.titleEn} - Image ${currentImageIndex + 1}`}
           draggable="false"
-          className="h-full w-full object-cover object-center p-6"
+          className="aspect-square h-full w-full object-cover object-center"
         />
 
         {totalImages > 1 && (
@@ -88,35 +116,29 @@ export function ProductCard({ product }: { product: ProductDTO }) {
         )}
       </div>
 
-      <Button
-        variant="destructive"
-        size="icon"
-        className="absolute top-2 right-2 h-8 w-8 rounded-full opacity-0 transition-opacity group-hover:opacity-100"
-        onClick={(e) => {
-          e.preventDefault();
-          // setShowDeleteDialog(true);
-        }}
-      >
-        <Trash2 className="h-4 w-4" />
-        <span className="sr-only">Delete product</span>
-      </Button>
-
-      <CardContent className="flex-grow pt-4">
-        <Badge className="mb-2" variant="outline">
-          {product.categoryName}
-        </Badge>
-        <h2 className="line-clamp-2 text-lg font-semibold">
-          {product.titleId}
-        </h2>
+      <CardContent className="space-y-3">
+        <LanguageToggle language={language} setLanguage={setLanguage} />
+        <div className="flex items-center gap-x-2">
+          <Badge className="mb-2" variant="outline">
+            {product.categoryName}
+          </Badge>
+          <Dialog>
+            <DialogTrigger className="text-sm font-medium text-primary hover:underline">
+              <h2 className="line-clamp-2 text-lg font-semibold">{title}</h2>
+            </DialogTrigger>
+            <ProductDetailDialog product={product} />
+          </Dialog>
+        </div>
       </CardContent>
 
-      <CardFooter className="pt-0">
-        <Dialog>
-          <DialogTrigger className="text-sm font-medium text-primary hover:underline">
-            View Details
-          </DialogTrigger>
-          <ProductDetailDialog product={product} />
-        </Dialog>
+      <CardFooter className="justify-end gap-x-4 pt-0">
+        <EditProductDialog product={product} />
+        <span
+          className="cursor-pointer text-destructive"
+          onClick={handleDelete}
+        >
+          Delete
+        </span>
       </CardFooter>
     </Card>
   );

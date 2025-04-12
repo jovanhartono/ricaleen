@@ -67,8 +67,8 @@ export function ArticleForm({
     <form onSubmit={form.handleSubmit(handleOnSubmit)} className="space-y-6">
       <Tabs className="space-y-6">
         <TabsList>
-          <TabsTrigger value="id">Indonesia</TabsTrigger>
-          <TabsTrigger value="en">English</TabsTrigger>
+          <TabsTrigger value="id">ID</TabsTrigger>
+          <TabsTrigger value="en">EN</TabsTrigger>
         </TabsList>
 
         <FormField

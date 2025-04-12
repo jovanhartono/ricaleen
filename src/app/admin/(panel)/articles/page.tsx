@@ -1,16 +1,9 @@
 import { AddArticleDialog } from "@/app/admin/(panel)/articles/add-article-dialog";
-import { ArticlesTable } from "@/app/admin/(panel)/articles/table";
-import { articleOptions } from "@/lib/query-options";
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from "@tanstack/react-query";
-import { Suspense } from "react";
+import { ArticleCard } from "@/app/admin/(panel)/articles/article-card";
+import { getArticles } from "@/service/admin";
 
 export default async function AdminArticlesPage() {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(articleOptions);
+  const articles = await getArticles();
 
   return (
     <div className="space-y-6">
@@ -19,11 +12,19 @@ export default async function AdminArticlesPage() {
         <AddArticleDialog />
       </div>
 
-      <Suspense fallback={<div>loading...</div>}>
-        <HydrationBoundary state={dehydrate(queryClient)}>
-          <ArticlesTable />
-        </HydrationBoundary>
-      </Suspense>
+      {articles.length ? (
+        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 2xl:grid-cols-4">
+          {articles.map((article) => (
+            <li key={article.id}>
+              <ArticleCard article={article} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-muted-foreground">
+          No articles found. Create one to get started.
+        </p>
+      )}
     </div>
   );
 }

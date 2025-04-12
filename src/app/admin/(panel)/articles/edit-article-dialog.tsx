@@ -1,5 +1,4 @@
 import { ArticleForm } from "@/app/admin/(panel)/articles/form";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -14,7 +13,6 @@ import { updateArticle, type ArticleDTO } from "@/service/admin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { Edit2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
@@ -52,11 +50,8 @@ export function EditArticleDialog({ article }: { article: ArticleDTO }) {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button size="icon" variant="outline">
-          <span className="sr-only">Edit</span>
-          <Edit2Icon />
-        </Button>
+      <DialogTrigger>
+        <span className="font-medium">Edit</span>
       </DialogTrigger>
       <DialogContent className="h-full w-full">
         <DialogHeader>
