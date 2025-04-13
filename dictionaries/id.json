@@ -1,0 +1,36 @@
+{
+  "header": {
+    "navigation" : {
+      "about": "Tentang Kami",
+      "contact": "Hubungi Kami"
+    }
+  },
+  "HomePage": {
+    "hero_title": "Perusahaan Perdagangan Logam Non-Ferrous Terkemuka di Indonesia",
+    "hero_description": "Dengan pengalaman industri lebih dari 20 tahun, kami adalah mitra terpercaya Anda untuk solusi skrap logam berkualitas tinggi.",
+    "about_title": "Merevolusi Perdagangan Logam.",
+    "about_extended_title": "Terstruktur, Efisien, dan Terpercaya.",
+    "about_second_title": "Perjalanan Kami Sejak 2002",
+    "about_first_description": "Didirikan pada tahun 2002 sebagai UD Multi Logam, kami telah berkembang dan bertransformasi menjadi PT Ricaleen Persada Jaya, yang kini dikenal sebagai mitra terpercaya bagi perusahaan lokal maupun internasional.",
+    "about_second_description": "Saat ini, kami berdiri sebagai pemain kunci dalam industri skrap logam non-ferrous, khususnya dalam penyediaan tembaga bekas dan berbagai skrap logam lainnya.",
+    "about_third_description": "Jaringan yard kami yang luas dan fasilitas pengolahan berteknologi modern memungkinkan penyortiran, pengemasan, dan kontrol kualitas yang ketat. Setiap material yang kami terima menjalani inspeksi menyeluruh untuk memastikan bahwa produk yang kami kirimkan memenuhi standar kualitas tertinggi.",
+    "usp_title": "Keahlian Industri & Warisan Terbukti,",
+    "usp_extended_title": "Mitra Terpercaya Anda untuk Solusi Skrap Logam",
+    "usp_point_one_title": "Program Hedging untuk Stabilitas Harga",
+    "usp_point_one_description": "<p>Kami menawarkan program hedging yang memungkinkan pelanggan mengunci harga logam bekas pada nilai tertentu, melindungi bisnis Anda dari fluktuasi pasar yang tidak terduga. Dengan ini, Anda dapat merencanakan anggaran lebih pasti dan meminimalkan risiko finansial akibat volatilitas harga logam global.</p>",
+    "usp_point_two_title": "Sistem Quality Control Terintegrasi dan Transparan",
+    "usp_point_two_description": "<ul><li><strong>Standar Kualitas Tinggi: </strong>Setiap material melewati proses sorting ketat sesuai standar internasional untuk memastikan kemurnian dan kebersihan.</li><li><strong>Penimbangan Akurat: </strong>Menggunakan timbangan digital berkalibrasi untuk menjamin keadilan dan akurasi dalam setiap transaksi.</li></ul>",
+    "usp_point_three_title": "Infrastruktur Lengkap",
+    "usp_point_three_description": "<ul class=\"space-y-3\"><li><strong>Yard Luas: </strong>Fasilitas penyimpanan dan pengolahan yang mampu menampung volume besar dengan akses logistik strategis</li><li><strong>Pengemasan Efisien:</strong><ul class=\"list-inside list-disc\"><li><strong>Jumbo Bags: </strong>Untuk keamanan material selama pengiriman jarak jauh.</li><li><strong>Pengemasan Tertekan: </strong>Teknologi pemadatan untuk mengoptimalkan efisiensi logistik.</li></ul></li></ul>",
+    "usp_point_four_title": "Jaringan Supplier & Mitra Global yang Luas",
+    "usp_point_four_description": "<ul class=\"space-y-3\"><li><strong>Sourcing Material:</strong> Jaringan pemasok tersebar di seluruh Indonesia, memastikan pasokan material yang stabil dan berkelanjutan.</li><li><strong>Kemitraan Internasional:</strong> Bermitra dengan perusahaan manufaktur dan trading terkemuka di berbagai belahan dunia.</li><li><strong>Logistik Global:</strong> Pengiriman material ke berbagai negara dengan dukungan mitra logistik berpengalaman, menjamin ketepatan waktu dan keamanan pengiriman.</li></ul>"
+  },
+  "Contact": {
+    "title": "Hubungi kami,",
+    "title_extended": "untuk Pengadaan Material yang Efisien dan Berkualitas Tinggi",
+    "our_location": "Lokasi Kami",
+    "location_heading": "Hubungi Kami Jauh dan Dekat",
+    "checklist_first": "Berpengalaman lebih dari 10 tahun",
+    "checklist_second": "Didukung teknologi terkini"
+  }
+}

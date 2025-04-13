@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import Providers from "@/app/providers";
 
@@ -21,7 +21,6 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
       className={`${montserrat.variable} antialiased`}
       suppressHydrationWarning
     >

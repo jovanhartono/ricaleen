@@ -1,0 +1,35 @@
+{
+  "header": {
+    "navigation" : {
+      "contact": "Contact Us"
+    }
+  },
+  "HomePage": {
+    "hero_title": "Leading Non-Ferrous Metal Scrap Trading in Indonesia",
+    "hero_description": "With over 20 years of industry experience, we are your trusted partner for high-quality metal scrap solutions.",
+    "about_title": "Revolutionizing Metal Trade.",
+    "about_extended_title": "Streamlined, Efficent, and Reliable.",
+    "about_second_title": "Our Journey Since 2002",
+    "about_first_description": "Established in 2002 as UD Multi Logam, we have evolved and transformed into PT Ricaleen Persada Jaya, now recognized as a trusted partner for both local and international companies.",
+    "about_second_description": "Today, we stand as a key player in the non-ferrous scrap metal industry, particularly in the supply of used copper and various other scrap metals.",
+    "about_third_description": "Our extensive network of yards and state-of-the-art processing facilities enables rigorous sorting, packing, and quality control. Every material we receive undergoes a thorough inspection to ensure that the products we deliver meet the highest quality standards.",
+    "usp_title": "Industry Expertise & Proven Legacy,",
+    "usp_extended_title": "Your Trusted Partner for Metal Scrap Solutions",
+    "usp_point_one_title": "Hedging Program for Price Stability",
+    "usp_point_one_description": "<p>We offer a hedging program that allows customers to lock in metal scrap prices at a specific value, protecting your business from unexpected market fluctuations. With this, you can plan your budget more effectively and minimize financial risks caused by global metal price volatility.</p>",
+    "usp_point_two_title": "Integrated and Transparent Quality Control System",
+    "usp_point_two_description": "<ul><li><strong>High-Quality Standards: </strong>Every material undergoes a strict sorting process in accordance with international standards to ensure purity and cleanliness.</li><li><strong>Accurate Weighing: </strong>We use calibrated digital scales to guarantee fairness and accuracy in every transaction.</li></ul>",
+    "usp_point_three_title": "Comprehensive Infrastructure",
+    "usp_point_three_description": "<ul class=\"space-y-3\"><li><strong>Spacious Yard: </strong>Storage and processing facilities capable of handling large volumes with strategic logistics access</li><li><strong>Efficient Packaging:</strong><ul class=\"list-inside list-disc\"><li><strong>Jumbo Bags: </strong>Ensures material safety during long-distance shipments.</li><li><strong>Pressed Packing: </strong>Compaction technology to optimize logistics efficiency.</li></ul></li></ul>",
+    "usp_point_four_title": "Extensive Supplier & Global Partner Network",
+    "usp_point_four_description": "<ul class=\"space-y-3\"><li><strong>National Sourcing:</strong> A supplier network spread across Indonesia, ensuring stable and sustainable material supply.</li><li><strong>International Partnerships:</strong> Collaborations with leading manufacturing and trading companies worldwide.</li><li><strong>Global Logistics:</strong> Material delivery to various countries supported by experienced logistics partners, ensuring timely and secure shipments.</li></ul>"
+  },
+  "Contact": {
+    "title": "Connect with us,",
+    "title_extended": "for Efficient and High-Quality Material Sourcing",
+    "our_location": "Our Location",
+    "location_heading": "Connecting Near and Far",
+    "checklist_first": "Experienced for more than 10 years",
+    "checklist_second": "Support for the latest technology"
+  }
+}
