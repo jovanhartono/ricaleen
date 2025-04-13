@@ -7,7 +7,7 @@ import {
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
-const softwarePoints = [
+const edgePoints = [
   {
     icon: ChartNoAxesColumnIncreasing,
     title: "usp_point_one_title",
@@ -95,7 +95,7 @@ export default async function Home() {
         </div>
 
         <dl className="container grid grid-cols-1 overflow-hidden rounded-4xl bg-white px-0 shadow-xs sm:grid-cols-2">
-          {softwarePoints.map(({ title, description, ...item }, index) => (
+          {edgePoints.map(({ title, description, ...item }, index) => (
             <div
               key={index}
               className="-mr-px -mb-px border-r border-b px-6 py-10"

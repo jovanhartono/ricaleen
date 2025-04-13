@@ -4,6 +4,14 @@ import Image from "next/image";
 
 const links = [
   {
+    href: "/products",
+    tLabel: "navigation.products",
+  },
+  {
+    href: "/articles",
+    tLabel: "navigation.articles",
+  },
+  {
     href: "/contact",
     tLabel: "navigation.contact",
   },
@@ -24,7 +32,7 @@ export function Header() {
         </Link>
 
         <nav className="ml-auto">
-          <ul className="flex items-center gap-x-2">
+          <ul className="flex items-center gap-x-4">
             {links.map((link, index) => (
               <li key={index}>
                 <Link

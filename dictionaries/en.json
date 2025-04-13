@@ -1,6 +1,8 @@
 {
   "header": {
     "navigation" : {
+      "products": "Products",
+      "articles": "Articles",
       "contact": "Contact Us"
     }
   },
