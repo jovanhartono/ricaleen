@@ -13,7 +13,7 @@ export default async function AdminArticlesPage() {
       </div>
 
       {articles.length ? (
-        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 2xl:grid-cols-4">
+        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {articles.map((article) => (
             <li key={article.id}>
               <ArticleCard article={article} />

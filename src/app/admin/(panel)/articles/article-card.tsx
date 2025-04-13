@@ -40,7 +40,9 @@ export function ArticleCard({ article }: { article: ArticleDTO }) {
         <LanguageToggle language={language} setLanguage={setLanguage} />
         <Dialog>
           <DialogTrigger>
-            <h2 className="line-clamp-2 text-lg font-semibold">{title}</h2>
+            <h2 className="line-clamp-2 text-left text-lg font-semibold">
+              {title}
+            </h2>
           </DialogTrigger>
           <ArticleDetailDialog article={article} />
         </Dialog>

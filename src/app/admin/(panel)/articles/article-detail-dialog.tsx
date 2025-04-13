@@ -6,6 +6,7 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/components/ui/dialog";
+import { Prose } from "@/components/ui/prose";
 import type { ArticleDTO } from "@/service/admin";
 import { LANGUAGE } from "@/types/enum";
 import { DialogTitle } from "@radix-ui/react-dialog";
@@ -47,12 +48,7 @@ export function ArticleDetailDialog({ article }: { article: ArticleDTO }) {
           />
         )}
 
-        <article
-          className="prose"
-          dangerouslySetInnerHTML={{
-            __html: content,
-          }}
-        />
+        <Prose body={content} />
       </div>
     </DialogContent>
   );

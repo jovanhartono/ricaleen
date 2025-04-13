@@ -24,7 +24,7 @@ export default async function ArticlePage({
   const content = locale === "id" ? article.contentId : article.contentEn;
 
   return (
-    <main className="container flex max-w-screen-lg py-6 sm:py-12">
+    <main className="container flex max-w-screen-lg flex-col py-6 sm:py-12">
       <article className="space-y-9">
         <h1>{title}</h1>
         {article.thumbnail && (
