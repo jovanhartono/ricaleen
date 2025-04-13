@@ -1,3 +1,7 @@
+import { ArticleCard } from "@/app/(public)/[locale]/articles/article-card";
+import { db } from "@/db";
+import { articlesTable } from "@/db/schema";
+import { desc } from "drizzle-orm";
 import {
   BlocksIcon,
   ChartNoAxesColumnIncreasing,
@@ -6,6 +10,7 @@ import {
 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
+import { Suspense } from "react";
 
 const edgePoints = [
   {
@@ -35,7 +40,7 @@ export default async function Home() {
   return (
     <main className="flex flex-col">
       <section className="flex flex-col gap-y-6">
-        <div className="container">
+        <div className="container py-6 sm:py-12">
           <h1>{t("hero_title")}</h1>
           <h2 className="mt-4 text-xl font-medium text-pretty">
             {t("hero_description")}
@@ -116,6 +121,35 @@ export default async function Home() {
           ))}
         </dl>
       </section>
+
+      <Suspense>
+        <ArticlesSection />
+      </Suspense>
     </main>
+  );
+}
+
+async function ArticlesSection() {
+  const t = await getTranslations("HomePage");
+  const articles = await db
+    .select()
+    .from(articlesTable)
+    .orderBy(desc(articlesTable.createdAt))
+    .limit(3);
+
+  return (
+    <section className="container grid grid-cols-1 py-6 sm:py-12">
+      <div className="mb-6 flex items-center justify-between">
+        <h2> {t("articles_latest")}</h2>
+      </div>
+
+      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {articles.map((article) => (
+          <li key={article.id}>
+            <ArticleCard article={article} />
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
