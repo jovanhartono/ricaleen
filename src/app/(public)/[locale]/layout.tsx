@@ -37,12 +37,12 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <meta name="apple-mobile-web-app-title" content="Ricaleen" />
-      <body className="flex flex-col">
+      <body className="flex min-h-screen flex-col">
         <NextIntlClientProvider>
           <Providers>
             <Toaster position="top-right" />
             <Header />
-            <div>{children}</div>
+            <div className="grow">{children}</div>
             <Footer />
           </Providers>
         </NextIntlClientProvider>

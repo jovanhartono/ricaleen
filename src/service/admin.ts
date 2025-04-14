@@ -12,7 +12,7 @@ import { categorySchema } from "@/lib/schema/category";
 import { productSchema } from "@/lib/schema/product";
 import { toSlug } from "@/lib/utils/helper";
 import { del } from "@vercel/blob";
-import { and, eq, getTableColumns } from "drizzle-orm";
+import { and, desc, eq, getTableColumns } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export const getArticles = async () => {
@@ -134,6 +134,34 @@ export const updateCategory = async (id: number, args: unknown) => {
   }
 };
 
+export const getProductById = async (id: number) => {
+  const [product, thumbnails] = await Promise.all([
+    db
+      .select({
+        ...getTableColumns(productsTable),
+        categoryName: categoriesTable.name,
+      })
+      .from(productsTable)
+      .where(eq(productsTable.id, id))
+      .leftJoin(
+        categoriesTable,
+        eq(productsTable.categoryId, categoriesTable.id),
+      )
+      .limit(1)
+      .then((res) => res[0]),
+    db.select().from(productThumbnailsTable),
+  ]);
+
+  const productWithThumbnails = {
+    ...product,
+    thumbnails: thumbnails
+      .filter(({ productId }) => productId === product.id)
+      .map(({ url }) => url),
+  };
+
+  return productWithThumbnails;
+};
+
 export const getProducts = async () => {
   const [products, thumbnails] = await Promise.all([
     db
@@ -145,7 +173,8 @@ export const getProducts = async () => {
       .leftJoin(
         categoriesTable,
         eq(productsTable.categoryId, categoriesTable.id),
-      ),
+      )
+      .orderBy(desc(productsTable.id)),
     db.select().from(productThumbnailsTable),
   ]);
 

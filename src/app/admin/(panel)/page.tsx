@@ -1,3 +1,3 @@
 export default function AdminPage() {
-  return <div>This is a protected page...</div>;
+  return <div>Welcome to admin panel.</div>;
 }
