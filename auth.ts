@@ -9,6 +9,8 @@ import { db } from "@/db";
 import { usersTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
+import createIntlMiddleware from "next-intl/middleware";
+import { routing } from "@/i18n/routing";
 
 const getUserByCredentials = async (credentials: CredentialsType) => {
   const users = await db
@@ -25,6 +27,8 @@ const getUserByCredentials = async (credentials: CredentialsType) => {
 
   return isValid ? { id: `${user.id}`, username: user.username } : null;
 };
+
+const intlMiddleware = createIntlMiddleware(routing);
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
@@ -47,12 +51,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return session;
     },
-    authorized({ auth, request: { nextUrl } }) {
+    authorized({ auth, request }) {
+      const { nextUrl } = request;
       const isLoggedIn = !!auth?.user;
       const isPageProtected = nextUrl.pathname.startsWith("/admin");
 
+      console.log(isLoggedIn, isPageProtected);
+
       if (isPageProtected) {
         return isLoggedIn;
+      }
+
+      if (!nextUrl.pathname.startsWith("/admin")) {
+        return intlMiddleware(request); // <- handles redirect if not authenticated
       }
 
       return true;

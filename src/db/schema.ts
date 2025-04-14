@@ -51,10 +51,10 @@ export const productsTable = pgTable("products", {
   categoryId: integer("category_id")
     .references(() => categoriesTable.id)
     .notNull(),
-  titleId: varchar("title_id", { length: 255 }).notNull(),
-  titleEn: varchar("title_en", { length: 255 }).notNull(),
-  contentId: varchar("content_id", { length: 255 }).notNull(),
-  contentEn: varchar("content_en", { length: 255 }).notNull(),
+  titleId: text("title_id").notNull(),
+  titleEn: text("title_en").notNull(),
+  contentId: text("content_id").notNull(),
+  contentEn: text("content_en").notNull(),
 });
 
 export const productThumbnailsTable = pgTable(
