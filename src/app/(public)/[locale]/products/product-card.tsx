@@ -14,7 +14,7 @@ export function ProductCard({ product }: { product: ProductDTO }) {
   const textContent = useSanitizedText(content);
 
   return (
-    <Link href={`/products/${product.id}`}>
+    <Link prefetch href={`/products/${product.id}`}>
       <Card className="gap-4 border-none p-0 shadow-none">
         <div className="relative aspect-square">
           {product.thumbnails.length && (

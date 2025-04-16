@@ -1,14 +1,19 @@
 import { ArticleCard } from "@/app/(public)/[locale]/articles/article-card";
+import { buttonVariants } from "@/components/ui/button";
 import { db } from "@/db";
 import { articlesTable } from "@/db/schema";
+import { Link } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
+import { getProducts, type ProductDTO } from "@/service/admin";
 import { desc } from "drizzle-orm";
 import {
+  ArrowUpRight,
   BlocksIcon,
   ChartNoAxesColumnIncreasing,
   DatabaseIcon,
   GlobeIcon,
 } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { Suspense } from "react";
 
@@ -123,9 +128,89 @@ export default async function Home() {
       </section>
 
       <Suspense>
+        <ProductSection />
+      </Suspense>
+
+      <div className="flex flex-col items-center gap-9 rounded-2xl bg-[#dfe3ed] from-brand/80 to-brand py-24">
+        <h2 className="text-center">{t("contact_section_heading")}</h2>
+        <Link
+          prefetch
+          href="/products"
+          className={cn(
+            buttonVariants({
+              size: "lg",
+              className: "w-48 bg-brand",
+            }),
+          )}
+        >
+          {t("contact_section_button")}
+          <ArrowUpRight />
+        </Link>
+      </div>
+
+      <Suspense>
         <ArticlesSection />
       </Suspense>
     </main>
+  );
+}
+
+async function Product({ product }: { product: ProductDTO }) {
+  const locale = await getLocale();
+  const title = locale === "id" ? product.titleId : product.titleEn;
+
+  return (
+    <figure className="shrink-0 basis-3/4 snap-start space-y-3 sm:basis-[calc(50%_-_60px)]">
+      <Link
+        prefetch
+        href={`/products/${product.id}`}
+        className="relative block aspect-[4/5]"
+      >
+        <div className="absolute inset-0 z-10 bg-black/10"></div>
+        <Image
+          fill
+          alt={title}
+          src={product.thumbnails[0]}
+          className="object-cover object-center"
+        />
+      </Link>
+
+      <figcaption className="font-semibold tracking-tighter text-brand">
+        {title}
+      </figcaption>
+    </figure>
+  );
+}
+
+async function ProductSection() {
+  const t = await getTranslations("HomePage");
+  const products = await getProducts();
+
+  return (
+    <section className="container grid gap-6 overflow-hidden py-6 sm:grid-cols-3 sm:py-12">
+      <div className="flex flex-col justify-end space-y-3">
+        <h2 className="mt-auto tracking-tight">
+          {t("products_section_heading")}
+        </h2>
+        <Link
+          prefetch
+          href="/products"
+          className={cn(buttonVariants({ className: "w-fit bg-brand" }))}
+        >
+          {t("products_section_button")}
+          <ArrowUpRight />
+        </Link>
+      </div>
+
+      <div className="col-span-2 flex touch-pan-x snap-x snap-proximity items-stretch gap-6 overflow-x-auto">
+        {products.map((product) => (
+          <Product key={product.id} product={product} />
+        ))}
+      </div>
+      <div className="col-span-2">
+        <ul className="flex gap-6 *:flex-1"></ul>
+      </div>
+    </section>
   );
 }
 

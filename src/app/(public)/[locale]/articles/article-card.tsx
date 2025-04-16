@@ -11,14 +11,14 @@ export function ArticleCard({ article }: { article: ArticleDTO }) {
   const content = locale === "id" ? article.contentId : article.contentEn;
   // const textContent = useSanitizedText(content);
   return (
-    <Link href={`/articles/${article.id}`}>
+    <Link prefetch href={`/articles/${article.id}`}>
       <Card className="group relative flex h-full flex-col overflow-hidden pt-0">
         <div className="relative aspect-square">
           {article.thumbnail && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={article.thumbnail}
-              // alt={title}
+              alt={title}
               draggable="false"
               className="aspect-square h-full w-full object-cover object-center"
             />

@@ -22,7 +22,7 @@ export function Header() {
   return (
     <header className="sticky inset-x-0 top-0 z-50 bg-background/80 backdrop-blur-md">
       <div className="container flex h-20 items-center px-4">
-        <Link href="/">
+        <Link prefetch href="/">
           <Image
             src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/wordmark-R9wOmJpatlVFjfeLEzTZ80E2XSHgJU.png"
             width={120}
@@ -36,6 +36,7 @@ export function Header() {
             {links.map((link, index) => (
               <li key={index}>
                 <Link
+                  prefetch
                   key={link.href}
                   href={link.href}
                   className="font-medium transition-colors duration-200 hover:text-brand"
