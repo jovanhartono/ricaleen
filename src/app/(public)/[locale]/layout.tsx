@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Header } from "@/app/(public)/[locale]/header";
 import { Footer } from "@/app/(public)/[locale]/footer";
+import { FloatingWhatsapp } from "@/components/floating-whatsapp";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat-sans",
@@ -46,6 +47,8 @@ export default async function RootLayout({
             <Footer />
           </Providers>
         </NextIntlClientProvider>
+
+        <FloatingWhatsapp />
       </body>
     </html>
   );

@@ -56,8 +56,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const isLoggedIn = !!auth?.user;
       const isPageProtected = nextUrl.pathname.startsWith("/admin");
 
-      console.log(isLoggedIn, isPageProtected);
-
       if (isPageProtected) {
         return isLoggedIn;
       }
