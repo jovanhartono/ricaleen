@@ -131,7 +131,7 @@ export default async function Home() {
         <ProductSection />
       </Suspense>
 
-      <div className="flex flex-col items-center gap-9 rounded-2xl bg-[#dfe3ed] from-brand/80 to-brand py-24">
+      {/* <div className="flex flex-col items-center gap-9 rounded-2xl bg-[#dfe3ed] from-brand/80 to-brand py-24">
         <h2 className="text-center">{t("contact_section_heading")}</h2>
         <Link
           prefetch
@@ -146,7 +146,7 @@ export default async function Home() {
           {t("contact_section_button")}
           <ArrowUpRight />
         </Link>
-      </div>
+      </div> */}
 
       <Suspense>
         <ArticlesSection />
