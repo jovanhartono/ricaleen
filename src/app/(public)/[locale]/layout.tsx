@@ -39,6 +39,7 @@ export default async function RootLayout({
     >
       <meta name="apple-mobile-web-app-title" content="Ricaleen" />
       <body className="flex min-h-screen flex-col">
+        <FloatingWhatsapp />
         <NextIntlClientProvider>
           <Providers>
             <Toaster position="top-right" />
@@ -47,8 +48,6 @@ export default async function RootLayout({
             <Footer />
           </Providers>
         </NextIntlClientProvider>
-
-        <FloatingWhatsapp />
       </body>
     </html>
   );

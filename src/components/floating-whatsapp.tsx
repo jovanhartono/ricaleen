@@ -8,7 +8,7 @@ export function FloatingWhatsapp() {
       target="_blank"
       rel="noreferrer noopener"
       href={siteConfig.links.whatsapp}
-      className="fixed end-4 bottom-4 z-40 flex size-14 rounded-full bg-[#25D366]"
+      className="fixed end-4 bottom-4 z-50 flex size-14 rounded-full bg-[#25D366]"
       aria-label="whatsapp chat"
     >
       <svg

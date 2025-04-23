@@ -1,3 +1,4 @@
+import { siteConfig } from "@/lib/siteconfig";
 import { CheckIcon, MailIcon, PhoneIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
@@ -37,7 +38,7 @@ export default async function ContactPage() {
             <ul className="flex flex-col space-y-3 font-medium">
               <li>
                 <a
-                  href="tel:6281338863434"
+                  href={siteConfig.links.whatsapp}
                   className="flex items-center gap-x-2 text-background"
                 >
                   <PhoneIcon className="size-4" />
