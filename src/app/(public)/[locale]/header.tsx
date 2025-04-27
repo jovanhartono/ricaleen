@@ -1,3 +1,4 @@
+import { LanguageSwitcher } from "@/components/lang-switcher";
 import MobileNavbar from "@/components/mobile-navbar";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
@@ -50,6 +51,8 @@ export function Header() {
             ))}
           </ul>
         </nav>
+
+        <LanguageSwitcher />
       </div>
     </header>
   );
