@@ -39,7 +39,9 @@ export default async function AdminCategoryPage() {
           <Card key={category.id}>
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
-                <CardTitle>{category.name}</CardTitle>
+                <CardTitle>
+                  {category.name_id} / {category.name_en}
+                </CardTitle>
                 <Dialog>
                   <DialogTrigger className="flex cursor-pointer items-center">
                     <Pencil className="mr-2 h-4 w-4" />
@@ -55,7 +57,7 @@ export default async function AdminCategoryPage() {
                   <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md border">
                     <Image
                       src={category.thumbnail || "/placeholder.svg"}
-                      alt={`${category.name} thumbnail`}
+                      alt={`${category.name_en} thumbnail`}
                       fill
                       className="object-cover"
                     />

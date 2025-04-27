@@ -23,6 +23,7 @@ import { deleteThumbnail, getCategories } from "@/service/admin";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { upload } from "@vercel/blob/client";
 import { LoaderIcon, TrashIcon } from "lucide-react";
+import { useState } from "react";
 import {
   useFieldArray,
   useFormContext,
@@ -36,6 +37,7 @@ export function ProductForm({
 }: {
   handleOnSubmit: (product: ProductFormValues) => void;
 }) {
+  const [selectedTab, setSelectedTab] = useState<string>("id");
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
@@ -81,7 +83,11 @@ export function ProductForm({
 
   return (
     <form onSubmit={form.handleSubmit(handleOnSubmit)} className="space-y-6">
-      <Tabs className="space-y-6" defaultValue="id">
+      <Tabs
+        className="space-y-6"
+        value={selectedTab}
+        onValueChange={setSelectedTab}
+      >
         <TabsList>
           <TabsTrigger value="id">ID</TabsTrigger>
           <TabsTrigger value="en">EN</TabsTrigger>
@@ -112,8 +118,6 @@ export function ProductForm({
                   </div>
                 </FormControl>
                 <ThumbnailGallery fields={fields} remove={remove} />
-                {/* Hidden input to store the thumbnail URL */}
-                {/* <input type="hidden" value={value || ""} {...field} /> */}
               </div>
               <FormMessage />
             </FormItem>
@@ -140,7 +144,9 @@ export function ProductForm({
                       key={category.id}
                       value={category.id.toString()}
                     >
-                      {category.name}
+                      {selectedTab === "id"
+                        ? category.name_id
+                        : category.name_en}
                     </SelectItem>
                   ))}
                 </SelectContent>

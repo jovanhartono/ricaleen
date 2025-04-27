@@ -1,0 +1,1 @@
+ALTER TABLE "categories" ALTER COLUMN "name_id" DROP NOT NULL;

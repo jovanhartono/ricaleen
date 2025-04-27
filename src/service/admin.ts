@@ -97,7 +97,7 @@ export const createCategory = async (args: unknown) => {
     const category = await categorySchema.parseAsync(args);
     await db.insert(categoriesTable).values({
       ...category,
-      slug: toSlug(category.name),
+      slug: toSlug(category.name_en),
     });
   } catch (error) {
     throw error;
@@ -139,7 +139,7 @@ export const getProductById = async (id: number) => {
     db
       .select({
         ...getTableColumns(productsTable),
-        categoryName: categoriesTable.name,
+        categoryName: categoriesTable.name_en,
       })
       .from(productsTable)
       .where(eq(productsTable.id, id))
@@ -167,7 +167,8 @@ export const getProducts = async () => {
     db
       .select({
         ...getTableColumns(productsTable),
-        categoryName: categoriesTable.name,
+        categoryNameEn: categoriesTable.name_en,
+        categoryNameId: categoriesTable.name_id,
       })
       .from(productsTable)
       .leftJoin(

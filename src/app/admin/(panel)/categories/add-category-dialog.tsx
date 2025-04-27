@@ -25,7 +25,8 @@ export function AddCategoryDialog() {
   const form = useForm<CategoryFormType>({
     resolver: zodResolver(categorySchema),
     defaultValues: {
-      name: "",
+      name_id: "",
+      name_en: "",
       description: "",
     },
   });

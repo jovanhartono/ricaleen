@@ -27,7 +27,8 @@ export function EditCategoryDialog({ category }: { category: CategoryDTO }) {
   const form = useForm<CategoryFormType>({
     resolver: zodResolver(categorySchema),
     defaultValues: {
-      name: category.name,
+      name_id: category.name_id,
+      name_en: category.name_en,
       description: category.description || "",
       thumbnail: category.thumbnail,
     },

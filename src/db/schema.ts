@@ -46,16 +46,20 @@ export const users = pgTable("users", {
   password: varchar({ length: 255 }).notNull(),
 });
 
-export const productsTable = pgTable("products", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  categoryId: integer("category_id")
-    .references(() => categoriesTable.id)
-    .notNull(),
-  titleId: text("title_id").notNull(),
-  titleEn: text("title_en").notNull(),
-  contentId: text("content_id").notNull(),
-  contentEn: text("content_en").notNull(),
-});
+export const productsTable = pgTable(
+  "products",
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    categoryId: integer("category_id")
+      .references(() => categoriesTable.id)
+      .notNull(),
+    titleId: text("title_id").notNull(),
+    titleEn: text("title_en").notNull(),
+    contentId: text("content_id").notNull(),
+    contentEn: text("content_en").notNull(),
+  },
+  (table) => [index("product_id_idx").on(table.id)],
+);
 
 export const productThumbnailsTable = pgTable(
   "product_thumbnails",
@@ -79,15 +83,20 @@ export const prodcutThumbnailsRelations = relations(
   }),
 );
 
-export const categoriesTable = pgTable("categories", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: text("name").notNull(),
-  slug: text("slug").notNull().unique(),
-  description: text("description"),
-  thumbnail: varchar({ length: 255 }),
-  // Self-reference to parent category (can be null for top-level categories)
-  parentId: integer("parent_id"),
-});
+export const categoriesTable = pgTable(
+  "categories",
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    name_id: text("name_id").notNull().default(""),
+    name_en: text("name_en").notNull(),
+    slug: text("slug").notNull().unique(),
+    description: text("description"),
+    thumbnail: varchar({ length: 255 }),
+    // Self-reference to parent category (can be null for top-level categories)
+    parentId: integer("parent_id"),
+  },
+  (table) => [index("category_id_idx").on(table.id)],
+);
 
 // Define the relations
 export const categoriesRelations = relations(

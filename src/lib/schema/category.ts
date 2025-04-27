@@ -1,7 +1,11 @@
 import { z } from "zod";
 
 export const categorySchema = z.object({
-  name: z
+  name_id: z
+    .string()
+    .min(2, { message: "Name must be at least 2 characters" })
+    .max(50),
+  name_en: z
     .string()
     .min(2, { message: "Name must be at least 2 characters" })
     .max(50),

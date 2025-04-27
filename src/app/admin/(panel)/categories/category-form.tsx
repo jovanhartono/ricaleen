@@ -94,13 +94,12 @@ export function CategoryForm({
           )}
         </div>
       </div>
-
       <FormField
         control={form.control}
-        name="name"
+        name="name_id"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Name</FormLabel>
+            <FormLabel>Name ID</FormLabel>
             <FormControl>
               <Input placeholder="Enter category name" {...field} />
             </FormControl>
@@ -109,6 +108,19 @@ export function CategoryForm({
         )}
       />
 
+      <FormField
+        control={form.control}
+        name="name_en"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Name EN</FormLabel>
+            <FormControl>
+              <Input placeholder="Enter category name" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
       <FormField
         control={form.control}
         name="description"
@@ -126,7 +138,6 @@ export function CategoryForm({
           </FormItem>
         )}
       />
-
       <DialogFooter>
         <DialogClose asChild>
           <Button ref={closeButtonRef} type="button" variant="outline">

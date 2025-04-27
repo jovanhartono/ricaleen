@@ -24,6 +24,8 @@ export function ProductCard({ product }: { product: ProductDTO }) {
 
   const [language, setLanguage] = useState<LANGUAGE>(LANGUAGE.ID);
   const title = language === LANGUAGE.ID ? product.titleId : product.titleEn;
+  const category =
+    language === LANGUAGE.ID ? product.categoryNameId : product.categoryNameEn;
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % totalImages);
@@ -120,7 +122,7 @@ export function ProductCard({ product }: { product: ProductDTO }) {
         <LanguageToggle language={language} setLanguage={setLanguage} />
         <div className="flex items-center gap-x-2">
           <Badge className="mb-2" variant="outline">
-            {product.categoryName}
+            {category}
           </Badge>
           <Dialog>
             <DialogTrigger className="text-sm font-medium text-primary hover:underline">
