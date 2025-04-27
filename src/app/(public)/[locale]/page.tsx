@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { articlesTable } from "@/db/schema";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { getProducts, type ProductDTO } from "@/service/admin";
+import { getCategories, type CategoryDTO } from "@/service/admin";
 import { desc } from "drizzle-orm";
 import {
   ArrowUpRight,
@@ -128,7 +128,7 @@ export default async function Home() {
       </section>
 
       <Suspense>
-        <ProductSection />
+        <ProductCategorySection />
       </Suspense>
 
       {/* <div className="flex flex-col items-center gap-9 rounded-2xl bg-[#dfe3ed] from-brand/80 to-brand py-24">
@@ -155,25 +155,28 @@ export default async function Home() {
   );
 }
 
-async function Product({ product }: { product: ProductDTO }) {
+async function Category({ category }: { category: CategoryDTO }) {
   const locale = await getLocale();
-  const title = locale === "id" ? product.titleId : product.titleEn;
+  const title = locale === "id" ? category.name_id : category.name_en;
 
   return (
     <figure className="shrink-0 basis-3/4 snap-start space-y-3 sm:basis-[calc(50%_-_60px)]">
-      <Link
-        prefetch
-        href={`/products/${product.id}`}
-        className="relative block aspect-[4/5]"
-      >
-        <div className="absolute inset-0 z-10 bg-black/10"></div>
-        <Image
-          fill
-          alt={title}
-          src={product.thumbnails[0]}
-          className="object-cover object-center"
-        />
-      </Link>
+      {category.thumbnail && (
+        <Link
+          prefetch
+          // add a query params for category slug
+          href={`/products`}
+          className="relative block aspect-[4/5]"
+        >
+          <div className="absolute inset-0 z-10 bg-black/10"></div>
+          <Image
+            fill
+            alt={title}
+            src={category.thumbnail}
+            className="object-cover object-center"
+          />
+        </Link>
+      )}
 
       <figcaption className="font-semibold tracking-tighter text-brand">
         {title}
@@ -182,9 +185,9 @@ async function Product({ product }: { product: ProductDTO }) {
   );
 }
 
-async function ProductSection() {
+async function ProductCategorySection() {
   const t = await getTranslations("HomePage");
-  const products = await getProducts();
+  const categories = await getCategories();
 
   return (
     <section className="container grid gap-6 overflow-hidden py-6 sm:grid-cols-3 sm:py-12">
@@ -201,10 +204,9 @@ async function ProductSection() {
           <ArrowUpRight />
         </Link>
       </div>
-
       <div className="col-span-2 flex touch-pan-x snap-x snap-proximity items-stretch gap-6 overflow-x-auto">
-        {products.map((product) => (
-          <Product key={product.id} product={product} />
+        {categories.map((category) => (
+          <Category key={category.id} category={category} />
         ))}
       </div>
       <div className="col-span-2">

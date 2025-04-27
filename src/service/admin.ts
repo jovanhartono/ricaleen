@@ -12,7 +12,7 @@ import { categorySchema } from "@/lib/schema/category";
 import { productSchema } from "@/lib/schema/product";
 import { toSlug } from "@/lib/utils/helper";
 import { del } from "@vercel/blob";
-import { and, desc, eq, getTableColumns } from "drizzle-orm";
+import { and, asc, desc, eq, getTableColumns } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export const getArticles = async () => {
@@ -89,7 +89,7 @@ export const deleteThumbnail = async (url: string) => {
 };
 
 export const getCategories = async () =>
-  await db.select().from(categoriesTable);
+  await db.select().from(categoriesTable).orderBy(asc(categoriesTable.id));
 export type CategoryDTO = Awaited<ReturnType<typeof getCategories>>[number];
 
 export const createCategory = async (args: unknown) => {

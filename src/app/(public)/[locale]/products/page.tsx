@@ -1,16 +1,19 @@
 import { ProductCard } from "@/app/(public)/[locale]/products/product-card";
 import { getProducts, type ProductDTO } from "@/service/admin";
+import { getLocale } from "next-intl/server";
 
 export default async function ProductsPage() {
-  const products = await getProducts();
+  const [locale, products] = await Promise.all([getLocale(), getProducts()]);
 
   const productsGroupByCategory = products.reduce(
     (acc, curr) => {
-      if (!acc[curr.categoryName!]) {
-        acc[curr.categoryName!] = [];
+      const categoryName =
+        locale === "id" ? curr.categoryNameId : curr.categoryNameEn;
+      if (!acc[categoryName!]) {
+        acc[categoryName!] = [];
       }
 
-      acc[curr.categoryName!].push(curr);
+      acc[categoryName!].push(curr);
 
       return acc;
     },
@@ -25,7 +28,7 @@ export default async function ProductsPage() {
           <h1>Explore Our Diverse Non-Ferrous Metal Portfolio</h1>
         </div>
       </section>
-      <section className="container pb-6 sm:pb-12">
+      <section className="container space-y-9 pb-6 sm:pb-12">
         {Object.entries(productsGroupByCategory).map(
           ([category, products], index) => (
             <div key={index} className="space-y-6">
