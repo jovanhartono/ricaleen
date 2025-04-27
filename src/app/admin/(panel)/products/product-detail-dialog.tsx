@@ -19,6 +19,8 @@ import { LanguageToggle } from "@/app/admin/(panel)/components/lang-toggle";
 
 export function ProductDetailDialog({ product }: { product: ProductDTO }) {
   const [language, setLanguage] = useState<LANGUAGE>(LANGUAGE.ID);
+  const categoryName =
+    language === LANGUAGE.ID ? product.categoryNameId : product.categoryNameEn;
 
   return (
     <DialogContent className="h-full w-full sm:max-w-[1024px]">
@@ -49,7 +51,7 @@ export function ProductDetailDialog({ product }: { product: ProductDTO }) {
           <LanguageToggle language={language} setLanguage={setLanguage} />
           <div className="flex items-center gap-x-2">
             <Badge className="text-base" variant="secondary">
-              {product.categoryName}
+              {categoryName}
             </Badge>
             <h2 className="text-4xl font-semibold">
               {language === LANGUAGE.ID ? product.titleId : product.titleEn}
