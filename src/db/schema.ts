@@ -91,7 +91,7 @@ export const categoriesTable = pgTable(
     name_en: text("name_en").notNull(),
     slug: text("slug").notNull().unique(),
     description: text("description"),
-    thumbnail: varchar({ length: 255 }),
+    thumbnail: varchar({ length: 255 }).notNull(),
     // Self-reference to parent category (can be null for top-level categories)
     parentId: integer("parent_id"),
   },

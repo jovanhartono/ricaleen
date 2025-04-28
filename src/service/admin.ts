@@ -125,7 +125,10 @@ export const updateCategory = async (id: number, args: unknown) => {
 
     await db
       .update(categoriesTable)
-      .set(category)
+      .set({
+        ...category,
+        slug: toSlug(category.name_en),
+      })
       .where(eq(categoriesTable.id, id));
 
     revalidatePath("/admin/categories");
@@ -167,6 +170,7 @@ export const getProducts = async () => {
     db
       .select({
         ...getTableColumns(productsTable),
+        categorySlug: categoriesTable.slug,
         categoryNameEn: categoriesTable.name_en,
         categoryNameId: categoriesTable.name_id,
       })

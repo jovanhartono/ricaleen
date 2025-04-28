@@ -35,7 +35,7 @@ export default function MobileNavbar({ links }: MobileNavbarProps) {
   }, [pathname]);
 
   return (
-    <div className="ml-auto sm:hidden">
+    <div className="sm:hidden">
       <Button variant="ghost" size="icon" onClick={toggleMenu}>
         {isOpen ? (
           <XIcon className="size-6" />

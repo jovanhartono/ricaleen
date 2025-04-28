@@ -26,14 +26,14 @@ export function Header() {
       <div className="relative container flex h-20 items-center px-4">
         <Link prefetch href="/">
           <Image
+            priority
             src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/wordmark-R9wOmJpatlVFjfeLEzTZ80E2XSHgJU.png"
             width={120}
             height={35}
             alt="logo"
+            className="h-auto w-auto"
           />
         </Link>
-
-        <MobileNavbar links={links} />
 
         <nav className="ml-auto max-sm:hidden">
           <ul className="flex items-center gap-x-4">
@@ -53,6 +53,8 @@ export function Header() {
         </nav>
 
         <LanguageSwitcher />
+
+        <MobileNavbar links={links} />
       </div>
     </header>
   );

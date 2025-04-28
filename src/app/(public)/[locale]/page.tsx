@@ -58,6 +58,7 @@ export default async function Home() {
             src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/metal-background-zAOcVwubhjrejTz0v647jTiV0I4TVe.jpg"
             alt="hero background"
             className="h-[600px] object-cover object-center"
+            sizes="100vw"
           />
         </div>
       </section>
@@ -68,7 +69,7 @@ export default async function Home() {
           <br />
           <span className="font-normal">{t("about_extended_title")}</span>
         </h2>
-        <div className="grid md:grid-cols-[minmax(400px,_40%)_60%] md:gap-x-0">
+        <div className="grid sm:grid-cols-[minmax(400px,_40%)_60%] sm:gap-x-0">
           <div className="relative z-10 self-center rounded bg-brand px-6 py-8 *:text-balance [&_>p]:mb-4 [&_>p]:text-primary-foreground/90 max-sm:[&>_p]:text-sm">
             <h3 className="mb-6 text-2xl font-medium text-primary-foreground">
               {t("about_second_title")}
@@ -83,6 +84,7 @@ export default async function Home() {
               alt="Company history"
               fill
               className="rounded object-cover object-center"
+              sizes="(max-width: 640px) 100vw, 60vw"
             />
           </div>
         </div>
@@ -164,8 +166,12 @@ async function Category({ category }: { category: CategoryDTO }) {
       {category.thumbnail && (
         <Link
           prefetch
-          // add a query params for category slug
-          href={`/products`}
+          href={{
+            pathname: "/products",
+            query: {
+              category: category.slug,
+            },
+          }}
           className="relative block aspect-[4/5]"
         >
           <div className="absolute inset-0 z-10 bg-black/10"></div>
@@ -174,6 +180,7 @@ async function Category({ category }: { category: CategoryDTO }) {
             alt={title}
             src={category.thumbnail}
             className="object-cover object-center"
+            sizes="(max-width: 640px) 75vw, 33vw"
           />
         </Link>
       )}

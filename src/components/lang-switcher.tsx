@@ -12,7 +12,7 @@ import {
 import { useLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 const languages = {
   id: "Bahasa Indonesia",
@@ -25,14 +25,17 @@ export function LanguageSwitcher() {
   const [isPending, startTransition] = useTransition();
   const locale = useLocale();
   const params = useParams();
+  const searchParams = useSearchParams();
 
   const switchLocale = (locale: "id" | "en") => {
     startTransition(() => {
+      const query = Object.fromEntries(searchParams.entries());
+
       router.replace(
         // @ts-expect-error -- TypeScript will validate that only known `params`
         // are used in combination with a given `pathname`. Since the two will
         // always match for the current route, we can skip runtime checks.
-        { pathname, params },
+        { pathname, params, query },
         { locale },
       );
     });
@@ -44,7 +47,7 @@ export function LanguageSwitcher() {
         <Button
           variant="ghost"
           size="sm"
-          className="ml-4 flex h-8 items-center gap-1 px-2"
+          className="ml-auto flex h-8 items-center gap-1 px-2 sm:ml-4"
         >
           <Globe className="h-4 w-4" />
           <span className="text-sm font-medium">{locale.toUpperCase()}</span>
