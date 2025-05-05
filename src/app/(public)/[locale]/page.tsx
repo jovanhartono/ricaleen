@@ -55,9 +55,9 @@ export default async function Home() {
           <div className="absolute inset-0 z-10 bg-foreground/10" />
           <Image
             fill
-            src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/metal-background-zAOcVwubhjrejTz0v647jTiV0I4TVe.jpg"
+            src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/hero-bg-QbNufDfPMKPCBQEp4x43v55T1zJ3Bg.webp"
             alt="hero background"
-            className="h-[600px] object-cover object-center"
+            className="h-[600px] object-cover object-bottom"
             sizes="100vw"
           />
         </div>
