@@ -1,7 +1,6 @@
 import { ProductCard } from "@/app/(public)/[locale]/products/product-card";
 import { Link } from "@/i18n/navigation";
 import { getCategories, getProducts, type ProductDTO } from "@/service/admin";
-import { LANGUAGE } from "@/types/enum";
 import { getLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
 
@@ -61,9 +60,7 @@ export default async function ProductsPage({
                     sizes="(max-width: 640px) 50vw, 25vw"
                   />
                   <figcaption className="font-semibold text-brand">
-                    {locale === LANGUAGE.ID
-                      ? category.name_id
-                      : category.name_en}
+                    {locale === "id" ? category.name_id : category.name_en}
                   </figcaption>
                 </figure>
               </Link>

@@ -1,10 +1,18 @@
+"use client";
+
 import { LanguageSwitcher } from "@/components/lang-switcher";
 import MobileNavbar from "@/components/mobile-navbar";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 
 const links = [
+  {
+    href: "/about",
+    tLabel: "navigation.about",
+  },
   {
     href: "/products",
     tLabel: "navigation.products",
@@ -21,8 +29,29 @@ const links = [
 
 export function Header() {
   const t = useTranslations("header");
+  const pathname = usePathname();
+  const [scrollY, setScrollY] = useState<number>(0);
+
+  const isHomePage = pathname === "/";
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const isScrolled = scrollY > 10;
+
   return (
-    <header className="sticky inset-x-0 top-0 z-50 bg-background/80 backdrop-blur-md">
+    <header
+      className={cn(
+        "sticky inset-x-0 top-0 z-50 transition-colors duration-200",
+        {
+          "bg-background/80 backdrop-blur-md": isScrolled || !isHomePage,
+        },
+      )}
+    >
       <div className="relative container flex h-20 items-center px-4">
         <Link prefetch href="/">
           <Image
@@ -41,9 +70,14 @@ export function Header() {
               <li key={index}>
                 <Link
                   prefetch
-                  key={link.href}
                   href={link.href}
-                  className="font-medium transition-colors duration-200 hover:text-brand"
+                  className={cn(
+                    "font-medium transition-colors duration-200 hover:text-brand",
+                    {
+                      "text-white/80 hover:text-white":
+                        isHomePage && !isScrolled,
+                    },
+                  )}
                 >
                   {t(link.tLabel)}
                 </Link>
@@ -52,7 +86,7 @@ export function Header() {
           </ul>
         </nav>
 
-        <LanguageSwitcher />
+        <LanguageSwitcher isScrolled={isScrolled} />
 
         <MobileNavbar links={links} />
       </div>

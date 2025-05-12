@@ -16,8 +16,9 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "PT Ricaleen Persada Jaya · Non-Ferrous Metal Trading Company",
-  description: "Metal Trading Company",
+  title:
+    "PT Ricaleen Persada Jaya · Your Trusted Solution for High Quality Metal Scrap",
+  description: "Your Trusted Solution for High Quality Metal Scrap",
 };
 
 export default async function RootLayout({

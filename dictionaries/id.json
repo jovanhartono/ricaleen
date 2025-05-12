@@ -1,6 +1,7 @@
 {
   "header": {
     "navigation" : {
+      "about": "Tentang Kami",
       "products": "Produk",
       "articles": "Artikel",
       "contact": "Hubungi Kami"
@@ -31,6 +32,24 @@
     "contact_section_button": "Hubungi Kami",
     "products_section_heading": "Jelajahi Produk Kami",
     "products_section_button": "Lebih Lanjut"
+  },
+  "About": {
+    "heading": "Solusi Terpercaya Anda untuk Skrap Logam Berkualitas Tinggi",
+    "heading_description": "Sejak 2002, kami telah membangun reputasi dalam menyediakan skrap logam premium dengan layanan yang andal dan kualitas tanpa kompromi—mendukung industri di seluruh Indonesia dan sekitarnya. Mulai dari sumber hingga pengiriman, kami berkomitmen pada keberlanjutan, integritas, dan kemitraan jangka panjang.",
+    "list": {
+      "first": {
+        "title": " Perjalanan Transformasi Menuju Kelas Dunia",
+        "description": "Didirikan pada tahun 2002 sebagai UD Multi Logam, kami telah berkembang dan bertransformasi menjadi PT Ricaleen Persada Jaya, yang kini dikenal sebagai mitra terpercaya bagi perusahaan lokal maupun internasional."
+      },
+      "second": {
+        "title": "Professional dan Kredibel",
+        "description": "Saat ini, kami berdiri sebagai pemain kunci dalam industri skrap logam non-ferrous, khususnya dalam penyediaan tembaga bekas dan berbagai skrap logam lainnya."
+      },
+      "third": {
+        "title": "Jaminan Kualitas",
+        "description": "Jaringan yard kami yang luas dan fasilitas pengolahan berteknologi modern memungkinkan penyortiran, pengemasan, dan kontrol kualitas yang ketat. Setiap material yang kami terima menjalani inspeksi menyeluruh untuk memastikan bahwa produk yang kami kirimkan memenuhi standar kualitas tertinggi."
+      }
+    }
   },
   "Product": {
     "title": "Jelajahi Beragam Portofolio Logam Non-Ferrous Kami"

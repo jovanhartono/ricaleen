@@ -16,13 +16,11 @@ import { createArticle } from "@/service/admin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { PlusIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export function AddArticleDialog() {
-  const { refresh } = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const form = useForm({
     resolver: zodResolver(articleSchema),
@@ -40,7 +38,6 @@ export function AddArticleDialog() {
       form.reset();
       setOpen(false);
       toast.success("Create Article Success!");
-      refresh();
     } catch {
       toast.error("Create Article Error. Please try again.");
     }

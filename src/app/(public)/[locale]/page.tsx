@@ -44,7 +44,32 @@ export default async function Home() {
   const t = await getTranslations("HomePage");
   return (
     <main className="flex flex-col">
-      <section className="flex flex-col gap-y-6">
+      <section className="relative -mt-20 flex h-[calc(100vh)] flex-col justify-center gap-y-6">
+        <div className="relative z-10 container space-y-4 py-6 sm:py-12">
+          <h1 className="text-white">{t("hero_title")}</h1>
+          <h2 className="w-3/4 text-xl font-medium text-balance text-white">
+            {t("hero_description")}
+          </h2>
+          <Link
+            prefetch
+            href="/about"
+            className="mt-3 inline-flex h-9 items-center gap-2 rounded-xl px-4 font-semibold text-white ring-2 ring-white"
+          >
+            Jelajahi Perjalanan Kami
+            <ArrowUpRight />
+          </Link>
+        </div>
+        <Image
+          priority
+          fill
+          src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/hero-bg-QbNufDfPMKPCBQEp4x43v55T1zJ3Bg.webp"
+          alt="hero background"
+          className="h-[600px] object-cover object-bottom brightness-30"
+          sizes="100vw"
+        />
+      </section>
+
+      {/* <section className="flex flex-col gap-y-6">
         <div className="container py-6 sm:py-12">
           <h1>{t("hero_title")}</h1>
           <h2 className="mt-4 text-xl font-medium text-pretty">
@@ -52,17 +77,16 @@ export default async function Home() {
           </h2>
         </div>
         <div className="relative h-[500px] md:h-[600px]">
-          <div className="absolute inset-0 z-10 bg-foreground/10" />
           <Image
+            priority
             fill
             src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/hero-bg-QbNufDfPMKPCBQEp4x43v55T1zJ3Bg.webp"
             alt="hero background"
-            className="h-[600px] object-cover object-bottom"
+            className="h-[600px] object-cover object-bottom brightness-70"
             sizes="100vw"
           />
         </div>
-      </section>
-
+      </section> */}
       <section id="about" className="container space-y-12 py-6 md:py-12">
         <h2>
           {t("about_title")}
@@ -83,16 +107,15 @@ export default async function Home() {
               src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/scrap-metal-44fSdxBR7zbyVZCNuhz0a5QWToYYnr.webp"
               alt="Company history"
               fill
-              className="rounded object-cover object-center"
+              className="rounded object-cover object-center brightness-80"
               sizes="(max-width: 640px) 100vw, 60vw"
             />
           </div>
         </div>
       </section>
-
       <section
         id="services"
-        className="flex flex-col gap-8 bg-[#dfe3ed] px-4 py-8 sm:gap-16 sm:py-16"
+        className="flex flex-col gap-8 bg-brand-secondary px-4 py-8 sm:gap-16 sm:py-16"
       >
         <div className="flex flex-col">
           <h2 className="mx-auto text-center text-balance">
@@ -128,28 +151,9 @@ export default async function Home() {
           ))}
         </dl>
       </section>
-
       <Suspense>
         <ProductCategorySection />
       </Suspense>
-
-      {/* <div className="flex flex-col items-center gap-9 rounded-2xl bg-[#dfe3ed] from-brand/80 to-brand py-24">
-        <h2 className="text-center">{t("contact_section_heading")}</h2>
-        <Link
-          prefetch
-          href="/products"
-          className={cn(
-            buttonVariants({
-              size: "lg",
-              className: "w-48 bg-brand",
-            }),
-          )}
-        >
-          {t("contact_section_button")}
-          <ArrowUpRight />
-        </Link>
-      </div> */}
-
       <Suspense>
         <ArticlesSection />
       </Suspense>
@@ -162,7 +166,7 @@ async function Category({ category }: { category: CategoryDTO }) {
   const title = locale === "id" ? category.name_id : category.name_en;
 
   return (
-    <figure className="shrink-0 basis-3/4 snap-start space-y-3 sm:basis-[calc(50%_-_60px)]">
+    <figure className="space-y-3">
       {category.thumbnail && (
         <Link
           prefetch
@@ -172,14 +176,14 @@ async function Category({ category }: { category: CategoryDTO }) {
               category: category.slug,
             },
           }}
-          className="relative block aspect-[4/5]"
+          className="block"
         >
-          <div className="absolute inset-0 z-10 bg-black/10"></div>
           <Image
-            fill
+            width={350}
+            height={440}
             alt={title}
             src={category.thumbnail}
-            className="object-cover object-center"
+            className="aspect-[4/5] h-full object-cover object-center brightness-75"
             sizes="(max-width: 640px) 75vw, 33vw"
           />
         </Link>
@@ -211,14 +215,16 @@ async function ProductCategorySection() {
           <ArrowUpRight />
         </Link>
       </div>
-      <div className="col-span-2 flex touch-pan-x snap-x snap-proximity items-stretch gap-6 overflow-x-auto">
+      <ul className="col-span-2 flex touch-pan-x snap-x snap-proximity items-stretch gap-6 overflow-x-auto">
         {categories.map((category) => (
-          <Category key={category.id} category={category} />
+          <li
+            key={category.id}
+            className="shrink-0 basis-3/4 snap-start sm:basis-[calc(50%_-_60px)]"
+          >
+            <Category category={category} />
+          </li>
         ))}
-      </div>
-      <div className="col-span-2">
-        <ul className="flex gap-6 *:flex-1"></ul>
-      </div>
+      </ul>
     </section>
   );
 }

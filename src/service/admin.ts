@@ -13,11 +13,15 @@ import { productSchema } from "@/lib/schema/product";
 import { toSlug } from "@/lib/utils/helper";
 import { del } from "@vercel/blob";
 import { and, asc, desc, eq, getTableColumns } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
+import { unstable_cache as cache, revalidateTag } from "next/cache";
 
-export const getArticles = async () => {
-  return await db.select().from(articlesTable);
-};
+export const getArticles = cache(
+  async () => {
+    return await db.select().from(articlesTable);
+  },
+  ["articles"],
+  { tags: ["articles"] },
+);
 export type ArticleDTO = Awaited<ReturnType<typeof getArticles>>[number];
 
 export const createArticle = async (args: unknown) => {
@@ -25,7 +29,7 @@ export const createArticle = async (args: unknown) => {
     const article = await articleSchema.parseAsync(args);
     await db.insert(articlesTable).values(article);
 
-    revalidatePath("/admin/articles");
+    revalidateTag("articles");
   } catch (error) {
     throw error;
   }
@@ -51,7 +55,7 @@ export const updateArticle = async (id: number, args: unknown) => {
 
     await db.update(articlesTable).set(article).where(eq(articlesTable.id, id));
 
-    revalidatePath("/admin/articles");
+    revalidateTag("articles");
   } catch (error) {
     throw error;
   }
@@ -74,7 +78,7 @@ export const deleteArticle = async (id: number) => {
       deleteThumbnail(existingArticle.thumbnail);
     }
 
-    revalidatePath("/admin/articles");
+    revalidateTag("articles");
   } catch (error) {
     throw error;
   }
@@ -88,8 +92,26 @@ export const deleteThumbnail = async (url: string) => {
   }
 };
 
-export const getCategories = async () =>
-  await db.select().from(categoriesTable).orderBy(asc(categoriesTable.id));
+export const getCategories = cache(
+  async () => {
+    const categories = await db
+      .select()
+      .from(categoriesTable)
+      .orderBy(asc(categoriesTable.id));
+
+    const otherCategory = categories.find((cat) => cat.slug === "others");
+    if (otherCategory) {
+      const filteredCategories = categories.filter(
+        (cat) => cat.slug !== "others",
+      );
+      return [...filteredCategories, otherCategory];
+    }
+
+    return categories;
+  },
+  ["categories"],
+  { tags: ["categories"] },
+);
 export type CategoryDTO = Awaited<ReturnType<typeof getCategories>>[number];
 
 export const createCategory = async (args: unknown) => {
@@ -99,6 +121,8 @@ export const createCategory = async (args: unknown) => {
       ...category,
       slug: toSlug(category.name_en),
     });
+
+    revalidateTag("categories");
   } catch (error) {
     throw error;
   }
@@ -131,7 +155,7 @@ export const updateCategory = async (id: number, args: unknown) => {
       })
       .where(eq(categoriesTable.id, id));
 
-    revalidatePath("/admin/categories");
+    revalidateTag("categories");
   } catch (error) {
     throw error;
   }
@@ -165,33 +189,37 @@ export const getProductById = async (id: number) => {
   return productWithThumbnails;
 };
 
-export const getProducts = async () => {
-  const [products, thumbnails] = await Promise.all([
-    db
-      .select({
-        ...getTableColumns(productsTable),
-        categorySlug: categoriesTable.slug,
-        categoryNameEn: categoriesTable.name_en,
-        categoryNameId: categoriesTable.name_id,
-      })
-      .from(productsTable)
-      .leftJoin(
-        categoriesTable,
-        eq(productsTable.categoryId, categoriesTable.id),
-      )
-      .orderBy(desc(productsTable.id)),
-    db.select().from(productThumbnailsTable),
-  ]);
+export const getProducts = cache(
+  async () => {
+    const [products, thumbnails] = await Promise.all([
+      db
+        .select({
+          ...getTableColumns(productsTable),
+          categorySlug: categoriesTable.slug,
+          categoryNameEn: categoriesTable.name_en,
+          categoryNameId: categoriesTable.name_id,
+        })
+        .from(productsTable)
+        .leftJoin(
+          categoriesTable,
+          eq(productsTable.categoryId, categoriesTable.id),
+        )
+        .orderBy(desc(productsTable.id)),
+      db.select().from(productThumbnailsTable),
+    ]);
 
-  const productsWithThumbnails = products.map((product) => ({
-    ...product,
-    thumbnails: thumbnails
-      .filter(({ productId }) => productId === product.id)
-      .map(({ url }) => url),
-  }));
+    const productsWithThumbnails = products.map((product) => ({
+      ...product,
+      thumbnails: thumbnails
+        .filter(({ productId }) => productId === product.id)
+        .map(({ url }) => url),
+    }));
 
-  return productsWithThumbnails;
-};
+    return productsWithThumbnails;
+  },
+  ["products"],
+  { tags: ["products"] },
+);
 export type ProductDTO = Awaited<ReturnType<typeof getProducts>>[number];
 
 export const createProduct = async (args: unknown) => {
@@ -211,7 +239,7 @@ export const createProduct = async (args: unknown) => {
       ),
     );
 
-    revalidatePath("/admin/products");
+    revalidateTag("products");
   } catch (error) {
     throw error;
   }
@@ -264,7 +292,7 @@ export const updateProduct = async (id: number, args: unknown) => {
       ),
     );
 
-    revalidatePath("/admin/products");
+    revalidateTag("products");
   } catch (error) {
     throw error;
   }
@@ -285,7 +313,7 @@ export const deleteProduct = async (id: number) => {
       deleteThumbnail(url);
     });
 
-    revalidatePath("/admin/products");
+    revalidateTag("products");
   } catch (error) {
     throw error;
   }

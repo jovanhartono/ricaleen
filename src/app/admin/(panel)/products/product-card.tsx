@@ -11,13 +11,11 @@ import { DialogTrigger } from "@radix-ui/react-dialog";
 import { ProductDetailDialog } from "@/app/admin/(panel)/products/product-detail-dialog";
 import { useModal } from "@/app/providers";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { EditProductDialog } from "@/app/admin/(panel)/products/edit-product-dialog";
 import { LanguageToggle } from "@/app/admin/(panel)/components/lang-toggle";
 import { LANGUAGE } from "@/types/enum";
 
 export function ProductCard({ product }: { product: ProductDTO }) {
-  const { refresh } = useRouter();
   const { openModal, closeModal } = useModal();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const totalImages = product.thumbnails.length;
@@ -46,7 +44,6 @@ export function ProductCard({ product }: { product: ProductDTO }) {
           await deleteProduct(product.id);
           toast.success("Product deleted successfully");
           closeModal();
-          refresh();
         } catch {
           toast.error("Failed to delete product");
         }

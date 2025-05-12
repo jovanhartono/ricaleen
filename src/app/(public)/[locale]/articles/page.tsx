@@ -9,12 +9,13 @@ export default async function ArticlesPage() {
   return (
     <main className="flex flex-col">
       <section className="relative flex h-[400px] items-center sm:h-[500px]">
-        <div className="absolute inset-0 z-10 bg-black/70"></div>
         <Image
           fill
+          priority
           src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/articles-bg-LtxanYewOEEPtBhxwo847A0dgBScGj.webp"
           alt="Articles background"
-          className="object-cover object-center"
+          className="object-cover object-center brightness-40"
+          sizes="100vw"
         />
         <div className="relative z-20 container *:text-brand-foreground">
           <h1 className="text-brand-foreground">Our Company Articles</h1>

@@ -1,6 +1,7 @@
 {
   "header": {
     "navigation" : {
+      "about": "About Us",
       "products": "Products",
       "articles": "Articles",
       "contact": "Contact Us"
@@ -34,6 +35,24 @@
   },
   "Product": {
     "title": "Explore Our Diverse Non-Ferrous Metal Portfolio"
+  },
+  "About": {
+    "heading": "Your Trusted Solution for High Quality Metal Scrap",
+    "heading_description": "Since 2002, we've built a reputation for delivering premium metal scrap with reliable service and uncompromising quality—supporting industries across Indonesia and beyond. From sourcing to delivery, we are committed to sustainability, integrity, and long-term partnerships.",
+    "list": {
+      "first": {
+        "title": "Transformation Journey Towards World Class",
+        "description": "Established in 2002 as UD Multi Logam, we have evolved and transformed into PT Ricaleen Persada Jaya, now recognized as a trusted partner for both local and international companies."
+      },
+      "second": {
+        "title": "Professional and Credible",
+        "description": "Today, we stand as a key player in the non-ferrous scrap metal industry, particularly in the supply of used copper and various other scrap metals."
+      },
+      "third": {
+        "title": "Quality Assurance",
+        "description": "Our extensive network of yards and state-of-the-art processing facilities enables rigorous sorting, packing, and quality control. Every material we receive undergoes a thorough inspection to ensure that the products we deliver meet the highest quality standards."
+      }
+    }
   },
   "Contact": {
     "title": "Connect with us,",

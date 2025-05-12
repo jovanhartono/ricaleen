@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { memo, useTransition } from "react";
 import { Check, ChevronDown, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,19 +13,26 @@ import { useLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { useParams, useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const languages = {
   id: "Bahasa Indonesia",
   en: "English",
 };
 
-export function LanguageSwitcher() {
+export const LanguageSwitcher = memo(function LanguageSwitcher({
+  isScrolled,
+}: {
+  isScrolled: boolean;
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
   const locale = useLocale();
   const params = useParams();
   const searchParams = useSearchParams();
+
+  const isHomePage = pathname === "/";
 
   const switchLocale = (locale: "id" | "en") => {
     startTransition(() => {
@@ -47,7 +54,9 @@ export function LanguageSwitcher() {
         <Button
           variant="ghost"
           size="sm"
-          className="ml-auto flex h-8 items-center gap-1 px-2 sm:ml-4"
+          className={cn("ml-auto flex h-8 items-center gap-1 px-2 sm:ml-4", {
+            "text-white": isHomePage && !isScrolled,
+          })}
         >
           <Globe className="h-4 w-4" />
           <span className="text-sm font-medium">{locale.toUpperCase()}</span>
@@ -68,4 +77,4 @@ export function LanguageSwitcher() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+});

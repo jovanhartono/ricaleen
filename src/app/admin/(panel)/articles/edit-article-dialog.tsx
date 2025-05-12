@@ -13,13 +13,11 @@ import { updateArticle, type ArticleDTO } from "@/service/admin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export function EditArticleDialog({ article }: { article: ArticleDTO }) {
-  const { refresh } = useRouter();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const form = useForm({
@@ -42,7 +40,6 @@ export function EditArticleDialog({ article }: { article: ArticleDTO }) {
       await updateArticle(article.id, articleFormValue);
       closeButtonRef.current?.click();
       toast.success("Edit Article Success!");
-      refresh();
     } catch {
       toast.error("Edit Article Error. Please try again.");
     }

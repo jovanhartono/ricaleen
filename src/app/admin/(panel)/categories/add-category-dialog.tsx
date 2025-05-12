@@ -14,12 +14,10 @@ import { CategoryForm } from "@/app/admin/(panel)/categories/category-form";
 import type { CategoryForm as CategoryFormType } from "@/lib/schema/category";
 import { createCategory } from "@/service/admin";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useRef } from "react";
 
 export function AddCategoryDialog() {
-  const { refresh } = useRouter();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const form = useForm<CategoryFormType>({
@@ -34,7 +32,6 @@ export function AddCategoryDialog() {
   const handleOnSubmit = async (values: CategoryFormType) => {
     try {
       await createCategory(values);
-      refresh();
       toast.success("Upload Category Success!");
       form.reset();
       closeButtonRef.current?.click();

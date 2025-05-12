@@ -13,14 +13,12 @@ import { updateProduct, type ProductDTO } from "@/service/admin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export function EditProductDialog({ product }: { product: ProductDTO }) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const { refresh } = useRouter();
 
   const form = useForm({
     resolver: zodResolver(productSchema),
@@ -47,7 +45,6 @@ export function EditProductDialog({ product }: { product: ProductDTO }) {
       form.reset();
       toast.success("Update product Success!");
       closeButtonRef.current?.click();
-      refresh();
     } catch {
       toast.error("Update product Error. Please try again.");
     }

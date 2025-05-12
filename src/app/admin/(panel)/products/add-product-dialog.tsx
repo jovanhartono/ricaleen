@@ -17,14 +17,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { PlusIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export function AddProductDialog() {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const { refresh } = useRouter();
 
   const form = useForm({
     resolver: zodResolver(productSchema),
@@ -43,7 +41,6 @@ export function AddProductDialog() {
       form.reset();
       toast.success("Upload product Success!");
       closeButtonRef.current?.click();
-      refresh();
     } catch {
       toast.error("Upload product Error. Please try again.");
     }
