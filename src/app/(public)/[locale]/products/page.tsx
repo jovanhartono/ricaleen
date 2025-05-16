@@ -48,7 +48,7 @@ export default async function ProductsPage({
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-6">
           {categories.map((category) => (
             <li key={category.id} className="cursor-pointer">
-              <Link scroll={false} prefetch href={`?category=${category.slug}`}>
+              <Link prefetch href={`?category=${category.slug}#product-list`}>
                 <figure className="space-y-3">
                   <Image
                     width={300}
@@ -68,16 +68,19 @@ export default async function ProductsPage({
           ))}
         </ul>
       </section>
-      <section className="container space-y-9 pb-6 sm:pb-12">
+      <section
+        id="product-list"
+        className="container scroll-mt-20 space-y-9 pb-6 sm:pb-12"
+      >
         {filteredEntries.length === 0 ? (
           <p>No products found for this category.</p>
         ) : (
           filteredEntries.map(([categoryName, products], index) => (
             <div key={index} className="space-y-6">
               <div className="flex h-12 items-center rounded bg-brand px-4 sm:h-16">
-                <p className="text-lg font-semibold text-brand-foreground sm:text-xl">
+                <h2 className="text-lg font-semibold text-brand-foreground sm:text-xl">
                   {categoryName}
-                </p>
+                </h2>
               </div>
               <ul className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
                 {products.map((product) => (

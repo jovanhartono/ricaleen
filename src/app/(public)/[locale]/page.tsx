@@ -55,7 +55,7 @@ export default async function Home() {
             href="/about"
             className="mt-3 inline-flex h-9 items-center gap-2 rounded-xl px-4 font-semibold text-white ring-2 ring-white"
           >
-            Jelajahi Perjalanan Kami
+            {t("hero_cta")}
             <ArrowUpRight />
           </Link>
         </div>
@@ -69,24 +69,6 @@ export default async function Home() {
         />
       </section>
 
-      {/* <section className="flex flex-col gap-y-6">
-        <div className="container py-6 sm:py-12">
-          <h1>{t("hero_title")}</h1>
-          <h2 className="mt-4 text-xl font-medium text-pretty">
-            {t("hero_description")}
-          </h2>
-        </div>
-        <div className="relative h-[500px] md:h-[600px]">
-          <Image
-            priority
-            fill
-            src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/hero-bg-QbNufDfPMKPCBQEp4x43v55T1zJ3Bg.webp"
-            alt="hero background"
-            className="h-[600px] object-cover object-bottom brightness-70"
-            sizes="100vw"
-          />
-        </div>
-      </section> */}
       <section id="about" className="container space-y-12 py-6 md:py-12">
         <h2>
           {t("about_title")}
@@ -94,7 +76,7 @@ export default async function Home() {
           <span className="font-normal">{t("about_extended_title")}</span>
         </h2>
         <div className="grid sm:grid-cols-[minmax(400px,_40%)_60%] sm:gap-x-0">
-          <div className="relative z-10 self-center rounded bg-brand px-6 py-8 *:text-balance [&_>p]:mb-4 [&_>p]:text-primary-foreground/90 max-sm:[&>_p]:text-sm">
+          <div className="relative z-10 self-center rounded-t bg-brand px-6 py-8 *:text-balance sm:rounded [&_>p]:mb-4 [&_>p]:text-primary-foreground/90 max-sm:[&>_p]:text-sm">
             <h3 className="mb-6 text-2xl font-medium text-primary-foreground">
               {t("about_second_title")}
             </h3>
@@ -104,11 +86,11 @@ export default async function Home() {
           </div>
           <div className="relative h-[400px] md:-ml-[15%] md:h-[550px]">
             <Image
-              src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/scrap-metal-44fSdxBR7zbyVZCNuhz0a5QWToYYnr.webp"
-              alt="Company history"
               fill
-              className="rounded object-cover object-center brightness-80"
-              sizes="(max-width: 640px) 100vw, 60vw"
+              src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/home-about-k97vQueEF7Hiyax9V90GLcTnEIV1my.webp"
+              alt="Company history"
+              className="rounded-b object-cover object-center brightness-90 sm:rounded"
+              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 60vw, 900w"
             />
           </div>
         </div>
@@ -179,6 +161,7 @@ async function Category({ category }: { category: CategoryDTO }) {
           className="block"
         >
           <Image
+            draggable="false"
             width={350}
             height={440}
             alt={title}

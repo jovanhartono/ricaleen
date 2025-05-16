@@ -21,17 +21,21 @@ export default async function ContactPage() {
             </h1>
 
             <div className="flex gap-6 text-brand-foreground">
-              <div className="flex items-center gap-2">
+              <div className="flex items-start gap-2 sm:items-center">
                 <div className="flex size-5 shrink-0 items-center justify-center rounded-full bg-white text-brand">
                   <CheckIcon className="size-3.5" />
                 </div>
-                {t("checklist_first")}
+                <p className="text-balance text-primary-foreground">
+                  {t("checklist_first")}
+                </p>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-start gap-2 sm:items-center">
                 <div className="flex size-5 shrink-0 items-center justify-center rounded-full bg-white text-brand">
                   <CheckIcon className="size-3.5" />
                 </div>
-                {t("checklist_second")}
+                <p className="text-balance text-primary-foreground">
+                  {t("checklist_second")}
+                </p>
               </div>
             </div>
 
@@ -56,20 +60,18 @@ export default async function ContactPage() {
             </ul>
           </div>
         </div>
-
-        <div className="absolute top-0 right-0 bottom-0 left-0 z-10 bg-foreground/60 sm:left-1/2 sm:bg-foreground/10" />
         <Image
-          width={600}
-          height={600}
-          src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/metal-background-2-VfoG2JEhbzM54jdGLC9rEuQzzpsykR.jpg"
-          alt="copper wire"
-          className="absolute top-0 right-0 bottom-0 h-full object-cover object-center sm:left-1/2 sm:w-1/2"
+          width={1440}
+          height={1000}
+          src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/contact-us-hero-IWOArBMmQWGGSNXu8DhlaQerfw7fkT.webp"
+          alt="contact us hero"
+          className="absolute top-0 right-0 bottom-0 h-full object-cover object-center brightness-30 sm:left-1/2 sm:w-1/2 sm:brightness-70"
         />
       </section>
 
       <section className="container grid gap-6 py-6 sm:grid-cols-2 sm:py-12">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d657.1422422922808!2d112.72977117354726!3d-7.393508844286843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e4637f8c8ffb%3A0x27e405b2d43e3279!2sPergudangan%20Gedangan%20Permai!5e0!3m2!1sen!2sid!4v1744541133784!5m2!1sen!2sid"
+          src={siteConfig.gmaps}
           className="aspect-square max-h-[550px] w-full rounded-xl border-0 max-sm:order-2"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"

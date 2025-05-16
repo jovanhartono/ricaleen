@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { createPortal } from "react-dom";
 import { Link, usePathname } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
 
 interface NavItem {
   tLabel: string;
@@ -14,9 +15,13 @@ interface NavItem {
 
 interface MobileNavbarProps {
   links: NavItem[];
+  isTriggerWhite: boolean;
 }
 
-export default function MobileNavbar({ links }: MobileNavbarProps) {
+export default function MobileNavbar({
+  links,
+  isTriggerWhite,
+}: MobileNavbarProps) {
   const t = useTranslations("header");
   const [isOpen, setIsOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
@@ -36,7 +41,12 @@ export default function MobileNavbar({ links }: MobileNavbarProps) {
 
   return (
     <div className="sm:hidden">
-      <Button variant="ghost" size="icon" onClick={toggleMenu}>
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={toggleMenu}
+        className={cn(isTriggerWhite && "text-white")}
+      >
         {isOpen ? (
           <XIcon className="size-6" />
         ) : (

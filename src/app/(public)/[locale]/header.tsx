@@ -3,10 +3,11 @@
 import { LanguageSwitcher } from "@/components/lang-switcher";
 import MobileNavbar from "@/components/mobile-navbar";
 import { Link, usePathname } from "@/i18n/navigation";
+import { siteConfig } from "@/lib/siteconfig";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useDeferredValue, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 const links = [
   {
@@ -42,6 +43,7 @@ export function Header() {
   }, []);
 
   const isScrolled = scrollY > 10;
+  const isTransparentHeader = isHomePage && !isScrolled;
 
   return (
     <header
@@ -56,7 +58,11 @@ export function Header() {
         <Link prefetch href="/">
           <Image
             priority
-            src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/wordmark-R9wOmJpatlVFjfeLEzTZ80E2XSHgJU.png"
+            src={
+              isTransparentHeader
+                ? siteConfig.logoUrl.transparent
+                : siteConfig.logoUrl.default
+            }
             width={120}
             height={35}
             alt="logo"
@@ -88,7 +94,10 @@ export function Header() {
 
         <LanguageSwitcher isScrolled={isScrolled} />
 
-        <MobileNavbar links={links} />
+        <MobileNavbar
+          links={links}
+          isTriggerWhite={isHomePage && !isScrolled}
+        />
       </div>
     </header>
   );

@@ -37,6 +37,7 @@ export default async function ProductDetailPage({
                   src={thumbnail}
                   alt={title}
                   className="object-cover object-center"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 628w"
                 />
               </CarouselItem>
             ))}
