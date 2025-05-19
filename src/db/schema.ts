@@ -96,6 +96,7 @@ export const categoriesTable = pgTable(
     thumbnail: varchar({ length: 255 }).notNull(),
     // Self-reference to parent category (can be null for top-level categories)
     parentId: integer("parent_id"),
+    order: integer("order").default(0).notNull(),
   },
   (table) => [index("category_id_idx").on(table.id)],
 );

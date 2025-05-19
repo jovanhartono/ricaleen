@@ -35,7 +35,7 @@ export default async function ProductsPage({
         products.every((product) => product.categorySlug === category),
       )
     : // get the first category if category searchParams is undefined
-      [Object.entries(productsGroupByCategory)[0]];
+      [Object.entries(productsGroupByCategory)[2]];
 
   return (
     <main className="flex flex-col">

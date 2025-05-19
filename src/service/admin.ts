@@ -97,15 +97,7 @@ export const getCategories = cache(
     const categories = await db
       .select()
       .from(categoriesTable)
-      .orderBy(asc(categoriesTable.id));
-
-    const otherCategory = categories.find((cat) => cat.slug === "others");
-    if (otherCategory) {
-      const filteredCategories = categories.filter(
-        (cat) => cat.slug !== "others",
-      );
-      return [...filteredCategories, otherCategory];
-    }
+      .orderBy(asc(categoriesTable.order));
 
     return categories;
   },

@@ -113,6 +113,13 @@
       "when": 1747677624759,
       "tag": "0015_fair_gladiator",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1747677857088,
+      "tag": "0016_soft_wind_dancer",
+      "breakpoints": true
     }
   ]
 }
