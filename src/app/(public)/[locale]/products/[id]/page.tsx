@@ -27,8 +27,8 @@ export default async function ProductDetailPage({
 
   return (
     <main className="py-6 sm:py-12">
-      <section className="grid gap-6 sm:container sm:grid-cols-2">
-        <Carousel>
+      <section className="grid gap-6 sm:container">
+        <Carousel className="sm:hidden">
           <CarouselContent>
             {product.thumbnails.map((thumbnail, index) => (
               <CarouselItem key={index} className="relative aspect-square">
@@ -46,10 +46,27 @@ export default async function ProductDetailPage({
           <CarouselNext />
         </Carousel>
 
-        <div className="flex flex-col max-sm:container sm:items-end sm:*:text-right">
+        <div className="flex flex-col max-sm:container">
           <h2>{title}</h2>
           <Prose body={content} />
         </div>
+      </section>
+
+      <section className="container max-sm:hidden">
+        <ul className="grid grid-cols-2 gap-2 xl:grid-cols-3">
+          {product.thumbnails.map((thumbnail, index) => (
+            <li key={index}>
+              <Image
+                alt={`${title} - thumbnail ${index + 1}`}
+                width={410}
+                height={410}
+                className="aspect-square w-full object-cover object-center"
+                src={thumbnail}
+                sizes="(max-width: 1280px) 50vw, 33vw"
+              />
+            </li>
+          ))}
+        </ul>
       </section>
     </main>
   );
