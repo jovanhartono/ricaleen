@@ -23,14 +23,24 @@ import { deleteThumbnail, getCategories } from "@/service/admin";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { upload } from "@vercel/blob/client";
 import { LoaderIcon, TrashIcon } from "lucide-react";
-import { useState } from "react";
+import { memo, useState } from "react";
 import {
   useFieldArray,
   useFormContext,
   type FieldArrayWithId,
+  type UseFieldArrayMove,
   type UseFieldArrayRemove,
 } from "react-hook-form";
 import { toast } from "sonner";
+import {
+  useSensors,
+  useSensor,
+  PointerSensor,
+  DndContext,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import { SortableContext, useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 export function ProductForm({
   handleOnSubmit,
@@ -43,7 +53,7 @@ export function ProductForm({
     queryFn: getCategories,
   });
   const form = useFormContext<ProductFormValues>();
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, move } = useFieldArray({
     control: form.control,
     name: "thumbnails",
   });
@@ -63,7 +73,7 @@ export function ProductForm({
     },
     onSuccess: (urls) => {
       urls.forEach((url) => {
-        append({ url });
+        append({ url, id: null });
       });
 
       toast.success("Images uploaded successfully");
@@ -117,7 +127,7 @@ export function ProductForm({
                     )}
                   </div>
                 </FormControl>
-                <ThumbnailGallery fields={fields} remove={remove} />
+                <ThumbnailGallery fields={fields} remove={remove} move={move} />
               </div>
               <FormMessage />
             </FormItem>
@@ -240,39 +250,88 @@ export function ProductForm({
   );
 }
 
+const SortableThumbnail = memo(function SortableThumbnail({
+  id,
+  url,
+  onDelete,
+}: {
+  id: string;
+  url: string;
+  onDelete: () => void;
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+  return (
+    <li
+      ref={setNodeRef}
+      style={style}
+      className="relative aspect-square rounded border"
+    >
+      <button
+        type="button"
+        className="absolute top-2 right-2 cursor-pointer rounded-full bg-red-500 p-1 text-white"
+        onClick={onDelete}
+      >
+        <TrashIcon className="size-4" />
+      </button>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={url}
+        alt="Products preview"
+        className="aspect-square w-full rounded object-contain object-center"
+        {...attributes}
+        {...listeners}
+      />
+    </li>
+  );
+});
+
 function ThumbnailGallery({
   fields: thumbnails,
   remove,
+  move,
 }: {
   fields: FieldArrayWithId<ProductFormValues, "thumbnails">[];
   remove: UseFieldArrayRemove;
+  move: UseFieldArrayMove;
 }) {
-  async function handleDelete(index: number, url: string) {
+  const sensors = useSensors(useSensor(PointerSensor));
+
+  const handleDelete = (index: number, url: string) => () => {
     remove(index);
     deleteThumbnail(url);
+  };
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (active.id !== over?.id) {
+      const oldIndex = thumbnails.findIndex((item) => item.id === active.id);
+      const newIndex = thumbnails.findIndex((item) => item.id === over?.id);
+      move(oldIndex, newIndex);
+    }
   }
 
   if (!thumbnails?.length) return null;
 
   return (
-    <ul className="grid grid-cols-3 gap-4">
-      {thumbnails.map(({ url }, index) => (
-        <li key={index} className="relative aspect-square rounded border">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={url}
-            alt="Products preview"
-            className="aspect-square w-full rounded object-contain object-center"
-          />
-          <button
-            type="button"
-            className="absolute top-2 right-2 cursor-pointer rounded-full bg-red-500 p-1 text-white"
-            onClick={() => handleDelete(index, url)}
-          >
-            <TrashIcon className="size-4" />
-          </button>
-        </li>
-      ))}
-    </ul>
+    <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+      <SortableContext items={thumbnails.map((item) => item.id)}>
+        <ul className="grid grid-cols-3 gap-4">
+          {thumbnails.map(({ url, id }, index) => (
+            <SortableThumbnail
+              key={id}
+              id={id}
+              url={url}
+              onDelete={handleDelete(index, url)}
+            />
+          ))}
+        </ul>
+      </SortableContext>
+    </DndContext>
   );
 }

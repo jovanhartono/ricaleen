@@ -3,6 +3,7 @@ import { z } from "zod";
 export const productSchema = z.object({
   thumbnails: z.array(
     z.object({
+      id: z.number().nullable(),
       url: z.string(),
     }),
   ),

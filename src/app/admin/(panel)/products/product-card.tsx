@@ -59,7 +59,7 @@ export function ProductCard({ product }: { product: ProductDTO }) {
       <div className="relative aspect-square">
         {/*  eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={product.thumbnails[currentImageIndex] || "/placeholder.svg"}
+          src={product.thumbnails[currentImageIndex].url || "/placeholder.svg"}
           alt={`${product.titleEn} - Image ${currentImageIndex + 1}`}
           draggable="false"
           className="aspect-square h-full w-full object-cover object-center"

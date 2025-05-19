@@ -36,7 +36,7 @@ export function ProductDetailDialog({ product }: { product: ProductDTO }) {
               <CarouselItem key={index} className="relative aspect-square">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={thumbnail}
+                  src={thumbnail.url}
                   alt="product thumbnail"
                   className="h-full w-full object-cover object-center"
                 />

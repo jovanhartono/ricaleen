@@ -176,7 +176,10 @@ export const getProductById = async (id: number) => {
       )
       .limit(1)
       .then((res) => res[0]),
-    db.select().from(productThumbnailsTable),
+    db
+      .select()
+      .from(productThumbnailsTable)
+      .orderBy(asc(productThumbnailsTable.order)),
   ]);
 
   const productWithThumbnails = {
@@ -204,7 +207,7 @@ export const getProducts = cache(
           categoriesTable,
           eq(productsTable.categoryId, categoriesTable.id),
         )
-        .orderBy(desc(productsTable.id)),
+        .orderBy(asc(productsTable.order)),
       db.select().from(productThumbnailsTable),
     ]);
 
@@ -212,7 +215,7 @@ export const getProducts = cache(
       ...product,
       thumbnails: thumbnails
         .filter(({ productId }) => productId === product.id)
-        .map(({ url }) => url),
+        .map(({ url, id }) => ({ id, url })),
     }));
 
     return productsWithThumbnails;
@@ -283,14 +286,24 @@ export const updateProduct = async (id: number, args: unknown) => {
       existingThumbnails.every((url) => url !== thumbnail.url),
     );
 
-    await Promise.all(
-      newThumbnails.map(({ url }) =>
+    console.log(updatedThumbnails);
+
+    await Promise.all([
+      ...newThumbnails.map(({ url }) =>
         db.insert(productThumbnailsTable).values({
           productId: id,
           url,
         }),
       ),
-    );
+      ...updatedThumbnails
+        .filter((val): val is { id: number; url: string } => val.id !== null)
+        .map((updatedThumbnail, index) =>
+          db
+            .update(productThumbnailsTable)
+            .set({ order: index })
+            .where(eq(productThumbnailsTable.id, updatedThumbnail.id)),
+        ),
+    ]);
 
     revalidateTag("products");
   } catch (error) {

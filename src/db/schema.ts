@@ -57,6 +57,7 @@ export const productsTable = pgTable(
     titleEn: text("title_en").notNull(),
     contentId: text("content_id").notNull(),
     contentEn: text("content_en").notNull(),
+    order: integer("order").default(0).notNull(),
   },
   (table) => [index("product_id_idx").on(table.id)],
 );
@@ -69,6 +70,7 @@ export const productThumbnailsTable = pgTable(
       .references(() => productsTable.id, { onDelete: "cascade" })
       .notNull(),
     url: varchar({ length: 255 }).notNull(),
+    order: integer("order").default(0).notNull(),
   },
   (table) => [index("product_thumbnail_idx").on(table.id, table.productId)],
 );

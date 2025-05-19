@@ -25,7 +25,8 @@ export function EditProductDialog({ product }: { product: ProductDTO }) {
     defaultValues: {
       ...product,
       thumbnails: product.thumbnails.map((thumbnail) => ({
-        url: thumbnail,
+        id: thumbnail.id,
+        url: thumbnail.url,
       })),
     },
   });
@@ -34,7 +35,8 @@ export function EditProductDialog({ product }: { product: ProductDTO }) {
     form.reset({
       ...product,
       thumbnails: product.thumbnails.map((thumbnail) => ({
-        url: thumbnail,
+        id: thumbnail.id,
+        url: thumbnail.url,
       })),
     });
   }, [form, product]);
