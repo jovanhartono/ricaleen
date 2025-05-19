@@ -88,7 +88,7 @@ export default async function ContactPage() {
             </dt>
             <dd className="space-y-2">
               <p>PT Ricaleen Persada Jaya</p>
-              <p>A11 & A17, Pergudangan Gedangan Permai </p>
+              <p>A11, A12, A17, Pergudangan Gedangan Permai</p>
               <p>Sidoarjo, Jawa Timur</p>
               <p>Indonesia</p>
             </dd>
