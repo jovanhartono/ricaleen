@@ -18,7 +18,8 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title:
     "PT Ricaleen Persada Jaya · Your Trusted Solution for High Quality Metal Scrap",
-  description: "Your Trusted Solution for High Quality Metal Scrap",
+  description:
+    "Established in 2002 as UD Multi Logam, we have evolved and transformed into PT Ricaleen Persada Jaya, now recognized as a trusted partner for both local and international companies. Today, we stand as a key player in the non-ferrous scrap metal industry, particularly in the supply of used copper and various other scrap metals.",
 };
 
 export default async function RootLayout({
