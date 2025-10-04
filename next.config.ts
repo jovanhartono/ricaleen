@@ -3,7 +3,11 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  experimental: {
+    ppr: true,
+  },
   images: {
+    minimumCacheTTL: 3600 * 24 * 30 * 12, // 1 year
     remotePatterns: [
       {
         protocol: "https",
