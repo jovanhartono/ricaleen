@@ -51,10 +51,10 @@ export default async function ContactPage() {
               </li>
               <li>
                 <a
-                  href="mailto:info@ricaleen.id"
+                  href="mailto:business@ricaleenmetal.co.id"
                   className="flex items-center gap-x-2 text-background"
                 >
-                  <MailIcon className="size-4" /> info@ricaleen.id
+                  <MailIcon className="size-4" /> business@ricaleenmetal.co.id
                 </a>
               </li>
             </ul>

@@ -11,12 +11,12 @@ const aboutUsPoints = [
   {
     title: "list.second.title",
     description: "list.second.description",
-    src: "https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/TB%208-YdYoBhytpEpPdyyIUvOBB6LKJbdqn8.jpg",
+    src: "https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/tb8-8nM9Qdgqp272yUvKRaDtO7S47AorGG.webp",
   },
   {
     title: "list.third.title",
     description: "list.third.description",
-    src: "https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/Tembaga%20Putih%207-YMYHgE4UNP4R90poForSbsFALS6iqq.jpg",
+    src: "https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/white-copper-UP1oOaEGc9fi805yojBZNd1P0fdrhI.webp",
   },
 ];
 

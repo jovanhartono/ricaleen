@@ -12,7 +12,7 @@ export default async function ArticlesPage() {
         <Image
           fill
           priority
-          src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/articles-bg-LtxanYewOEEPtBhxwo847A0dgBScGj.webp"
+          src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/articles-bg-js2NP08y1fjn6ltBNWFbmLgscIEDsQ.webp"
           alt="Articles background"
           className="object-cover object-center brightness-40"
           sizes="100vw"
