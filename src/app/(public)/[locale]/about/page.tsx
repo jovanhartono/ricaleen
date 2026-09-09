@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils";
-import { getTranslations } from "next-intl/server";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
+import { cn } from "@/lib/utils";
 
 const aboutUsPoints = [
   {
@@ -43,7 +43,7 @@ export default async function AboutUsPage() {
 
       {aboutUsPoints.map((point, index) => (
         <section
-          className="grid overflow-hidden rounded-xl bg-brand-secondary/50 max-sm:mx-4 sm:container sm:grid-cols-2 sm:px-0"
+          className="grid overflow-hidden rounded-xl bg-brand-secondary/50 sm:container max-sm:mx-4 sm:grid-cols-2 sm:px-0"
           key={index}
         >
           <Image

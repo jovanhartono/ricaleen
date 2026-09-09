@@ -1,10 +1,10 @@
 "use client";
 
+import Image from "next/image";
+import { useLocale } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "@/i18n/navigation";
 import type { ProductDTO } from "@/service/admin";
-import { useLocale } from "next-intl";
-import Image from "next/image";
 
 export function ProductCard({ product }: { product: ProductDTO }) {
   const locale = useLocale();
@@ -27,7 +27,7 @@ export function ProductCard({ product }: { product: ProductDTO }) {
         </div>
 
         <CardContent className="p-0">
-          <h2 className="line-clamp-2 text-lg font-semibold">{title}</h2>
+          <h2 className="line-clamp-2 font-semibold text-lg">{title}</h2>
         </CardContent>
       </Card>
     </Link>

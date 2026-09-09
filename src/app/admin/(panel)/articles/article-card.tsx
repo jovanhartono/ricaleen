@@ -1,15 +1,15 @@
 "use client";
 
+import { useState } from "react";
+import { ArticleDetailDialog } from "@/app/admin/(panel)/articles/article-detail-dialog";
+import { DeleteArticleDialog } from "@/app/admin/(panel)/articles/delete-article.dialog";
+import { EditArticleDialog } from "@/app/admin/(panel)/articles/edit-article-dialog";
 import { LanguageToggle } from "@/app/admin/(panel)/components/lang-toggle";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { useSanitizedText } from "@/hooks/useSanitizedText";
 import type { ArticleDTO } from "@/service/admin";
 import { LANGUAGE } from "@/types/enum";
-import { useState } from "react";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { ArticleDetailDialog } from "@/app/admin/(panel)/articles/article-detail-dialog";
-import { useSanitizedText } from "@/hooks/useSanitizedText";
-import { EditArticleDialog } from "@/app/admin/(panel)/articles/edit-article-dialog";
-import { DeleteArticleDialog } from "@/app/admin/(panel)/articles/delete-article.dialog";
 
 export function ArticleCard({ article }: { article: ArticleDTO }) {
   const [language, setLanguage] = useState<LANGUAGE>(LANGUAGE.ID);
@@ -40,7 +40,7 @@ export function ArticleCard({ article }: { article: ArticleDTO }) {
         <LanguageToggle language={language} setLanguage={setLanguage} />
         <Dialog>
           <DialogTrigger>
-            <h2 className="line-clamp-2 text-left text-lg font-semibold">
+            <h2 className="line-clamp-2 text-left font-semibold text-lg">
               {title}
             </h2>
           </DialogTrigger>

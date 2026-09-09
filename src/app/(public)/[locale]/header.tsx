@@ -1,13 +1,13 @@
 "use client";
 
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 import { LanguageSwitcher } from "@/components/lang-switcher";
 import MobileNavbar from "@/components/mobile-navbar";
 import { Link, usePathname } from "@/i18n/navigation";
 import { siteConfig } from "@/lib/siteconfig";
 import { cn } from "@/lib/utils";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
-import { useEffect, useState } from "react";
 
 const links = [
   {
@@ -54,7 +54,7 @@ export function Header() {
         },
       )}
     >
-      <div className="relative container flex h-20 items-center px-4">
+      <div className="container relative flex h-20 items-center px-4">
         <Link prefetch href="/">
           <Image
             priority

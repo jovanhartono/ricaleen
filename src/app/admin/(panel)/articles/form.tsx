@@ -1,11 +1,17 @@
 "use client";
 
+import { TabsContent } from "@radix-ui/react-tabs";
+import { useMutation } from "@tanstack/react-query";
+import { upload } from "@vercel/blob/client";
+import { LoaderIcon } from "lucide-react";
+import { useFormContext } from "react-hook-form";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -14,12 +20,6 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ArticleFormValues } from "@/lib/schema/article";
 import { cn } from "@/lib/utils";
 import { deleteThumbnail } from "@/service/admin";
-import { TabsContent } from "@radix-ui/react-tabs";
-import { useMutation } from "@tanstack/react-query";
-import { upload } from "@vercel/blob/client";
-import { LoaderIcon } from "lucide-react";
-import { useFormContext } from "react-hook-form";
-import { toast } from "sonner";
 
 export function ArticleForm({
   handleOnSubmit,
@@ -99,7 +99,7 @@ export function ArticleForm({
                   <img
                     alt="Thumbnail preview"
                     src={form.watch("thumbnail")!}
-                    className="object-cover-md w-full max-w-lg rounded"
+                    className="w-full max-w-lg rounded object-cover-md"
                   />
                 )}
                 {/* Hidden input to store the thumbnail URL */}

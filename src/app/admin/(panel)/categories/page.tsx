@@ -1,3 +1,6 @@
+import { count, eq, getTableColumns } from "drizzle-orm";
+import { Pencil, PlusCircle } from "lucide-react";
+import Image from "next/image";
 import { AddCategoryDialog } from "@/app/admin/(panel)/categories/add-category-dialog";
 import { EditCategoryDialog } from "@/app/admin/(panel)/categories/edit-category-dialog";
 import { Button } from "@/components/ui/button";
@@ -5,9 +8,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { db } from "@/db";
 import { categoriesTable, productsTable } from "@/db/schema";
-import { count, eq, getTableColumns } from "drizzle-orm";
-import { Pencil, PlusCircle } from "lucide-react";
-import Image from "next/image";
 
 export default async function AdminCategoryPage() {
   const categories = await db
@@ -22,7 +22,7 @@ export default async function AdminCategoryPage() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Categories</h1>
+        <h1 className="font-bold text-3xl tracking-tight">Categories</h1>
         <Dialog>
           <DialogTrigger asChild>
             <Button>
@@ -64,10 +64,10 @@ export default async function AdminCategoryPage() {
                   </div>
                 )}
                 <div className="flex flex-col justify-between">
-                  <p className="mb-2 text-sm text-muted-foreground">
+                  <p className="mb-2 text-muted-foreground text-sm">
                     {category.description}
                   </p>
-                  <p className="text-sm font-medium">
+                  <p className="font-medium text-sm">
                     {category.productCount} products
                   </p>
                 </div>

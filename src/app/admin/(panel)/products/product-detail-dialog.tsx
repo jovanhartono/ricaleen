@@ -1,5 +1,7 @@
-import { Badge } from "@/components/ui/badge";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useState } from "react";
+import { LanguageToggle } from "@/app/admin/(panel)/components/lang-toggle";
+import { Badge } from "@/components/ui/badge";
 import {
   Carousel,
   CarouselContent,
@@ -14,8 +16,6 @@ import {
 } from "@/components/ui/dialog";
 import type { ProductDTO } from "@/service/admin";
 import { LANGUAGE } from "@/types/enum";
-import { useState } from "react";
-import { LanguageToggle } from "@/app/admin/(panel)/components/lang-toggle";
 
 export function ProductDetailDialog({ product }: { product: ProductDTO }) {
   const [language, setLanguage] = useState<LANGUAGE>(LANGUAGE.ID);
@@ -53,7 +53,7 @@ export function ProductDetailDialog({ product }: { product: ProductDTO }) {
             <Badge className="text-base" variant="secondary">
               {categoryName}
             </Badge>
-            <h2 className="text-4xl font-semibold">
+            <h2 className="font-semibold text-4xl">
               {language === LANGUAGE.ID ? product.titleId : product.titleEn}
             </h2>
           </div>

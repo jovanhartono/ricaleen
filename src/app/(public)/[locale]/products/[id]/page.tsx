@@ -1,3 +1,6 @@
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import { getLocale } from "next-intl/server";
 import {
   Carousel,
   CarouselContent,
@@ -7,9 +10,6 @@ import {
 } from "@/components/ui/carousel";
 import { Prose } from "@/components/ui/prose";
 import { getProductById } from "@/service/admin";
-import { getLocale } from "next-intl/server";
-import Image from "next/image";
-import { notFound } from "next/navigation";
 
 export default async function ProductDetailPage({
   params,

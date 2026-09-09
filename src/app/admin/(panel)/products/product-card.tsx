@@ -1,18 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { deleteProduct, type ProductDTO } from "@/service/admin";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Dialog } from "@/components/ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { LanguageToggle } from "@/app/admin/(panel)/components/lang-toggle";
+import { EditProductDialog } from "@/app/admin/(panel)/products/edit-product-dialog";
 import { ProductDetailDialog } from "@/app/admin/(panel)/products/product-detail-dialog";
 import { useModal } from "@/app/providers";
-import { toast } from "sonner";
-import { EditProductDialog } from "@/app/admin/(panel)/products/edit-product-dialog";
-import { LanguageToggle } from "@/app/admin/(panel)/components/lang-toggle";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Dialog } from "@/components/ui/dialog";
+import { deleteProduct, type ProductDTO } from "@/service/admin";
 import { LANGUAGE } from "@/types/enum";
 
 export function ProductCard({ product }: { product: ProductDTO }) {
@@ -122,8 +122,8 @@ export function ProductCard({ product }: { product: ProductDTO }) {
             {category}
           </Badge>
           <Dialog>
-            <DialogTrigger className="text-sm font-medium text-primary hover:underline">
-              <h2 className="line-clamp-2 text-lg font-semibold">{title}</h2>
+            <DialogTrigger className="font-medium text-primary text-sm hover:underline">
+              <h2 className="line-clamp-2 font-semibold text-lg">{title}</h2>
             </DialogTrigger>
             <ProductDetailDialog product={product} />
           </Dialog>

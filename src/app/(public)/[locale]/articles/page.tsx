@@ -1,6 +1,6 @@
+import Image from "next/image";
 import { ArticleCard } from "@/app/(public)/[locale]/articles/article-card";
 import { getArticles } from "@/service/admin";
-import Image from "next/image";
 
 export default async function ArticlesPage() {
   // const t = await getTranslations("ArticlePage");
@@ -17,7 +17,7 @@ export default async function ArticlesPage() {
           className="object-cover object-center brightness-40"
           sizes="100vw"
         />
-        <div className="relative z-20 container *:text-brand-foreground">
+        <div className="container relative z-20 *:text-brand-foreground">
           <h1 className="text-brand-foreground">Our Company Articles</h1>
         </div>
       </section>

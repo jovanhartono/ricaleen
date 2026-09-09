@@ -1,5 +1,9 @@
 "use client";
 
+import { DialogTitle } from "@radix-ui/react-dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import dayjs from "dayjs";
+import { useState } from "react";
 import { LanguageToggle } from "@/app/admin/(panel)/components/lang-toggle";
 import {
   DialogContent,
@@ -9,10 +13,6 @@ import {
 import { Prose } from "@/components/ui/prose";
 import type { ArticleDTO } from "@/service/admin";
 import { LANGUAGE } from "@/types/enum";
-import { DialogTitle } from "@radix-ui/react-dialog";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import dayjs from "dayjs";
-import { useState } from "react";
 
 export function ArticleDetailDialog({ article }: { article: ArticleDTO }) {
   const [language, setLanguage] = useState<LANGUAGE>(LANGUAGE.ID);
@@ -31,13 +31,13 @@ export function ArticleDetailDialog({ article }: { article: ArticleDTO }) {
 
       <div className="mt-6 space-y-6">
         <div className="flex items-center gap-x-4">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             {dayjs(article.createdAt).format("DD MMMM YYYY")}
           </p>
           <LanguageToggle language={language} setLanguage={setLanguage} />
         </div>
 
-        <h2 className="text-4xl font-semibold">{title}</h2>
+        <h2 className="font-semibold text-4xl">{title}</h2>
 
         {article.thumbnail && (
           // eslint-disable-next-line @next/next/no-img-element

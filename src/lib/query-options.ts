@@ -1,5 +1,5 @@
-import { getArticles, getCategories, getProducts } from "@/service/admin";
 import { queryOptions } from "@tanstack/react-query";
+import { getArticles, getCategories, getProducts } from "@/service/admin";
 
 export const articleOptions = queryOptions({
   queryKey: ["articles"],

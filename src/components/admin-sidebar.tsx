@@ -1,18 +1,18 @@
+import { BoxIcon, LogOutIcon, NewspaperIcon, TagIcon } from "lucide-react";
+import Link from "next/link";
 import {
-  SidebarHeader,
-  SidebarContent,
   Sidebar,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
+  SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarFooter,
   SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { BoxIcon, LogOutIcon, NewspaperIcon, TagIcon } from "lucide-react";
 import { signOut } from "../../auth";
-import Link from "next/link";
 
 const menus = [
   {
@@ -41,7 +41,7 @@ export function AdminSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
-        <h1 className="text-xl font-medium tracking-tight">Admin Panel</h1>
+        <h1 className="font-medium text-xl tracking-tight">Admin Panel</h1>
       </SidebarHeader>
 
       <SidebarContent>

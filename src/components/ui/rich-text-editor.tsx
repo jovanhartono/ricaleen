@@ -1,19 +1,11 @@
-import {
-  forwardRef,
-  memo,
-  useCallback,
-  useEffect,
-  type ReactNode,
-  type Ref,
-} from "react";
 import { Link } from "@tiptap/extension-link";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import {
+  type Editor,
   EditorContent,
   useEditor,
   useEditorState,
-  type Editor,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import {
@@ -33,6 +25,14 @@ import {
   UnderlineIcon,
   Undo2Icon,
 } from "lucide-react";
+import {
+  forwardRef,
+  memo,
+  type ReactNode,
+  type Ref,
+  useCallback,
+  useEffect,
+} from "react";
 import { cn } from "@/lib/utils";
 
 interface ToolbarToggleProps {
@@ -66,8 +66,8 @@ const ToolbarToggle = memo(
         ref={ref}
         aria-label={label}
         className={cn(
-          "text-opacity-70 flex size-6 items-center justify-center rounded text-gray-900 transition-colors duration-100 ease-in-out [&>svg]:size-4",
-          "data-[active=true]:text-opacity-100 hover:bg-gray-100 data-[active=true]:bg-gray-200",
+          "flex size-6 items-center justify-center rounded text-gray-900 text-opacity-70 transition-colors duration-100 ease-in-out [&>svg]:size-4",
+          "hover:bg-gray-100 data-[active=true]:bg-gray-200 data-[active=true]:text-opacity-100",
           "disabled:text-gray-300",
         )}
         data-active={isActive}

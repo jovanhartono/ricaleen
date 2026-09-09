@@ -1,3 +1,6 @@
+import { ImageIcon, LoaderIcon } from "lucide-react";
+import { useRef } from "react";
+import { useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import {
@@ -14,9 +17,6 @@ import { useUploadThumbnail } from "@/hooks/useUploadThumbnail";
 import type { CategoryForm as CategoryFormType } from "@/lib/schema/category";
 import { cn } from "@/lib/utils";
 import { deleteThumbnail } from "@/service/admin";
-import { ImageIcon, LoaderIcon } from "lucide-react";
-import { useRef } from "react";
-import { useFormContext } from "react-hook-form";
 
 export function CategoryForm({
   handleOnSubmit,
@@ -87,7 +87,7 @@ export function CategoryForm({
             <div className="flex flex-col items-center gap-2 text-muted-foreground">
               <ImageIcon className="h-10 w-10" />
               <div className="flex flex-col items-center gap-1">
-                <span className="text-sm font-medium">Click to upload</span>
+                <span className="font-medium text-sm">Click to upload</span>
                 <span className="text-xs">SVG, PNG, JPG or GIF (max. 2MB)</span>
               </div>
             </div>
