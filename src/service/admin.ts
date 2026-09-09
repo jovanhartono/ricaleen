@@ -13,7 +13,7 @@ import { productSchema } from "@/lib/schema/product";
 import { toSlug } from "@/lib/utils/helper";
 import { del } from "@vercel/blob";
 import { and, asc, desc, eq, getTableColumns } from "drizzle-orm";
-import { unstable_cache as cache, revalidateTag } from "next/cache";
+import { unstable_cache as cache, updateTag } from "next/cache";
 
 export const getArticles = cache(
   async () => {
@@ -29,7 +29,7 @@ export const createArticle = async (args: unknown) => {
     const article = await articleSchema.parseAsync(args);
     await db.insert(articlesTable).values(article);
 
-    revalidateTag("articles");
+    updateTag("articles");
   } catch (error) {
     throw error;
   }
@@ -55,7 +55,7 @@ export const updateArticle = async (id: number, args: unknown) => {
 
     await db.update(articlesTable).set(article).where(eq(articlesTable.id, id));
 
-    revalidateTag("articles");
+    updateTag("articles");
   } catch (error) {
     throw error;
   }
@@ -78,7 +78,7 @@ export const deleteArticle = async (id: number) => {
       deleteThumbnail(existingArticle.thumbnail);
     }
 
-    revalidateTag("articles");
+    updateTag("articles");
   } catch (error) {
     throw error;
   }
@@ -114,7 +114,7 @@ export const createCategory = async (args: unknown) => {
       slug: toSlug(category.name_en),
     });
 
-    revalidateTag("categories");
+    updateTag("categories");
   } catch (error) {
     throw error;
   }
@@ -147,7 +147,7 @@ export const updateCategory = async (id: number, args: unknown) => {
       })
       .where(eq(categoriesTable.id, id));
 
-    revalidateTag("categories");
+    updateTag("categories");
   } catch (error) {
     throw error;
   }
@@ -234,7 +234,7 @@ export const createProduct = async (args: unknown) => {
       ),
     );
 
-    revalidateTag("products");
+    updateTag("products");
   } catch (error) {
     throw error;
   }
@@ -297,7 +297,7 @@ export const updateProduct = async (id: number, args: unknown) => {
         ),
     ]);
 
-    revalidateTag("products");
+    updateTag("products");
   } catch (error) {
     throw error;
   }
@@ -318,7 +318,7 @@ export const deleteProduct = async (id: number) => {
       deleteThumbnail(url);
     });
 
-    revalidateTag("products");
+    updateTag("products");
   } catch (error) {
     throw error;
   }
