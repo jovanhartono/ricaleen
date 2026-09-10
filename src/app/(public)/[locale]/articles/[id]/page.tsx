@@ -1,10 +1,10 @@
+import { eq } from "drizzle-orm";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import { getLocale } from "next-intl/server";
 import { Prose } from "@/components/ui/prose";
 import { db } from "@/db";
 import { articlesTable } from "@/db/schema";
-import { eq } from "drizzle-orm";
-import { getLocale } from "next-intl/server";
-import Image from "next/image";
-import { notFound } from "next/navigation";
 
 export default async function ArticlePage({
   params,

@@ -1,8 +1,10 @@
 "use client";
 
-import { useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { CategoryForm } from "@/app/admin/(panel)/categories/category-form";
 import {
   DialogClose,
   DialogContent,
@@ -11,13 +13,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
-import { updateCategory, type CategoryDTO } from "@/service/admin";
 import {
-  categorySchema,
   type CategoryForm as CategoryFormType,
+  categorySchema,
 } from "@/lib/schema/category";
-import { toast } from "sonner";
-import { CategoryForm } from "@/app/admin/(panel)/categories/category-form";
+import { type CategoryDTO, updateCategory } from "@/service/admin";
 
 export function EditCategoryDialog({ category }: { category: CategoryDTO }) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);

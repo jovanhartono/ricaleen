@@ -1,7 +1,9 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -10,10 +12,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { type Credentials, loginSchema } from "@/lib/schema/authentication";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { type Credentials, loginSchema } from "@/lib/schema/authentication";
 import { login } from "@/service/auth";
 
 export function LoginForm() {

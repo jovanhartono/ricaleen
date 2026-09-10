@@ -1,7 +1,9 @@
 "use client";
 
-import { memo, useTransition } from "react";
 import { Check, ChevronDown, Globe } from "lucide-react";
+import { useParams, useSearchParams } from "next/navigation";
+import { useLocale } from "next-intl";
+import { memo, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,10 +11,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useLocale } from "next-intl";
-import { routing } from "@/i18n/routing";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { useParams, useSearchParams } from "next/navigation";
+import { routing } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
 const languages = {
@@ -59,7 +59,7 @@ export const LanguageSwitcher = memo(function LanguageSwitcher({
           })}
         >
           <Globe className="h-4 w-4" />
-          <span className="text-sm font-medium">{locale.toUpperCase()}</span>
+          <span className="font-medium text-sm">{locale.toUpperCase()}</span>
           <ChevronDown className="h-3 w-3 opacity-50" />
         </Button>
       </DropdownMenuTrigger>

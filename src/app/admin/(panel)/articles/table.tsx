@@ -1,15 +1,15 @@
 "use client";
 
-import { DataTable } from "@/components/ui/data-table";
-import { getArticles, type ArticleDTO } from "@/service/admin";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createColumnHelper } from "@tanstack/react-table";
-import Link from "next/link";
 import dayjs from "dayjs";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import Link from "next/link";
 import { ArticleDetailDialog } from "@/app/admin/(panel)/articles/article-detail-dialog";
-import { EditArticleDialog } from "@/app/admin/(panel)/articles/edit-article-dialog";
 import { DeleteArticleDialog } from "@/app/admin/(panel)/articles/delete-article.dialog";
+import { EditArticleDialog } from "@/app/admin/(panel)/articles/edit-article-dialog";
+import { DataTable } from "@/components/ui/data-table";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { type ArticleDTO, getArticles } from "@/service/admin";
 
 const columnHelper = createColumnHelper<ArticleDTO>();
 const columns = [

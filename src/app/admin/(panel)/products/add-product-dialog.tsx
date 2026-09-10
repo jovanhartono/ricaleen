@@ -1,5 +1,12 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { PlusIcon } from "lucide-react";
+import { useRef } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { ProductForm } from "@/app/admin/(panel)/products/form";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,15 +18,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
-import { productSchema, type ProductFormValues } from "@/lib/schema/product";
+import { type ProductFormValues, productSchema } from "@/lib/schema/product";
 import { createProduct } from "@/service/admin";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { DialogClose } from "@radix-ui/react-dialog";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { PlusIcon } from "lucide-react";
-import { useRef } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 
 export function AddProductDialog() {
   const closeButtonRef = useRef<HTMLButtonElement>(null);

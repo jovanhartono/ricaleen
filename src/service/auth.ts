@@ -1,7 +1,7 @@
 "use server";
 
-import { type Credentials } from "@/lib/schema/authentication";
 import { AuthError } from "next-auth";
+import type { Credentials } from "@/lib/schema/authentication";
 import { signIn } from "../../auth";
 
 export const login = async (

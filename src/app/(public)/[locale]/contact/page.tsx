@@ -1,14 +1,14 @@
-import { siteConfig } from "@/lib/siteconfig";
 import { CheckIcon, MailIcon, PhoneIcon } from "lucide-react";
-import { getTranslations } from "next-intl/server";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
+import { siteConfig } from "@/lib/siteconfig";
 
 export default async function ContactPage() {
   const t = await getTranslations("Contact");
   return (
     <main>
       <section className="relative flex h-[450px] bg-brand py-12 max-sm:items-center sm:h-[600px]">
-        <div className="relative z-20 container">
+        <div className="container relative z-20">
           <div className="flex flex-col space-y-9 sm:w-1/2">
             <h1 className="mr-6 font-normal text-background">
               <strong className="font-medium sm:text-6xl">
@@ -51,10 +51,10 @@ export default async function ContactPage() {
               </li>
               <li>
                 <a
-                  href="mailto:info@ricaleen.id"
+                  href="mailto:business@ricaleenmetal.co.id"
                   className="flex items-center gap-x-2 text-background"
                 >
-                  <MailIcon className="size-4" /> info@ricaleen.id
+                  <MailIcon className="size-4" /> business@ricaleenmetal.co.id
                 </a>
               </li>
             </ul>
@@ -77,13 +77,13 @@ export default async function ContactPage() {
           referrerPolicy="no-referrer-when-downgrade"
         />
         <div className="sm:py-6">
-          <p className="text-xl font-semibold text-brand">
+          <p className="font-semibold text-brand text-xl">
             {t("our_location")}
           </p>
           <h2 className="text-pretty">{t("location_heading")}</h2>
 
           <dl className="mt-3 space-y-3 sm:mt-12">
-            <dt className="text-lg font-semibold tracking-tighter text-brand">
+            <dt className="font-semibold text-brand text-lg tracking-tighter">
               Headquarters
             </dt>
             <dd className="space-y-2">

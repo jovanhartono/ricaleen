@@ -1,10 +1,10 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { useModal } from "@/app/providers";
 import { cn } from "@/lib/utils";
 import { deleteArticle } from "@/service/admin";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
 
 export function DeleteArticleDialog({ id }: { id: number }) {
   const { openModal, closeModal } = useModal();

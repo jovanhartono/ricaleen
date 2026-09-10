@@ -1,6 +1,6 @@
+import Image from "next/image";
 import { ArticleCard } from "@/app/(public)/[locale]/articles/article-card";
 import { getArticles } from "@/service/admin";
-import Image from "next/image";
 
 export default async function ArticlesPage() {
   // const t = await getTranslations("ArticlePage");
@@ -12,12 +12,12 @@ export default async function ArticlesPage() {
         <Image
           fill
           priority
-          src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/articles-bg-LtxanYewOEEPtBhxwo847A0dgBScGj.webp"
+          src="https://yd1jimsuwvzgnhbn.public.blob.vercel-storage.com/articles-bg-js2NP08y1fjn6ltBNWFbmLgscIEDsQ.webp"
           alt="Articles background"
           className="object-cover object-center brightness-40"
           sizes="100vw"
         />
-        <div className="relative z-20 container *:text-brand-foreground">
+        <div className="container relative z-20 *:text-brand-foreground">
           <h1 className="text-brand-foreground">Our Company Articles</h1>
         </div>
       </section>

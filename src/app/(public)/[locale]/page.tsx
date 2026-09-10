@@ -1,10 +1,3 @@
-import { ArticleCard } from "@/app/(public)/[locale]/articles/article-card";
-import { buttonVariants } from "@/components/ui/button";
-import { db } from "@/db";
-import { articlesTable } from "@/db/schema";
-import { Link } from "@/i18n/navigation";
-import { cn } from "@/lib/utils";
-import { getCategories, type CategoryDTO } from "@/service/admin";
 import { desc } from "drizzle-orm";
 import {
   ArrowUpRight,
@@ -13,9 +6,16 @@ import {
   DatabaseIcon,
   GlobeIcon,
 } from "lucide-react";
-import { getLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+import { ArticleCard } from "@/app/(public)/[locale]/articles/article-card";
+import { buttonVariants } from "@/components/ui/button";
+import { db } from "@/db";
+import { articlesTable } from "@/db/schema";
+import { Link } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
+import { type CategoryDTO, getCategories } from "@/service/admin";
 
 const edgePoints = [
   {
@@ -45,9 +45,9 @@ export default async function Home() {
   return (
     <main className="flex flex-col">
       <section className="relative -mt-20 flex h-[calc(100vh)] flex-col justify-center gap-y-6">
-        <div className="relative z-10 container space-y-4 py-6 sm:py-12">
+        <div className="container relative z-10 space-y-4 py-6 sm:py-12">
           <h1 className="text-white">{t("hero_title")}</h1>
-          <h2 className="w-3/4 text-xl font-medium text-balance text-white">
+          <h2 className="w-3/4 text-balance font-medium text-white text-xl">
             {t("hero_description")}
           </h2>
           <Link
@@ -76,8 +76,8 @@ export default async function Home() {
           <span className="font-normal">{t("about_extended_title")}</span>
         </h2>
         <div className="grid sm:grid-cols-[minmax(400px,_40%)_60%] sm:gap-x-0">
-          <div className="relative z-10 self-center rounded-t bg-brand px-6 py-8 *:text-balance sm:rounded [&_>p]:mb-4 [&_>p]:text-primary-foreground/90 max-sm:[&>_p]:text-sm">
-            <h3 className="mb-6 text-2xl font-medium text-primary-foreground">
+          <div className="relative z-10 self-center rounded-t bg-brand px-6 py-8 *:text-balance sm:rounded max-sm:[&>_p]:text-sm [&_>p]:mb-4 [&_>p]:text-primary-foreground/90">
+            <h3 className="mb-6 font-medium text-2xl text-primary-foreground">
               {t("about_second_title")}
             </h3>
             <p>{t("about_first_description")}</p>
@@ -100,7 +100,7 @@ export default async function Home() {
         className="flex flex-col gap-8 bg-brand-secondary px-4 py-8 sm:gap-16 sm:py-16"
       >
         <div className="flex flex-col">
-          <h2 className="mx-auto text-center text-balance">
+          <h2 className="mx-auto text-balance text-center">
             <strong className="font-medium">
               {t("usp_title")}
               <br />
@@ -120,11 +120,11 @@ export default async function Home() {
               <div className="flex aspect-square size-10 items-center justify-center rounded-md p-2 shadow">
                 <item.icon className="h-8 w-8 text-brand" />
               </div>
-              <dt className="mt-6 text-2xl font-medium tracking-tight text-brand">
+              <dt className="mt-6 font-medium text-2xl text-brand tracking-tight">
                 {t(title)}
               </dt>
               <dd
-                className="prose mt-1.5 text-slate-600 prose-strong:text-brand"
+                className="prose mt-1.5 prose-strong:text-brand text-slate-600"
                 dangerouslySetInnerHTML={{
                   __html: t.raw(description),
                 }}
@@ -172,7 +172,7 @@ async function Category({ category }: { category: CategoryDTO }) {
         </Link>
       )}
 
-      <figcaption className="font-semibold tracking-tighter text-brand">
+      <figcaption className="font-semibold text-brand tracking-tighter">
         {title}
       </figcaption>
     </figure>

@@ -1,6 +1,12 @@
 "use client";
 
 import {
+  isServer,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import { createContext, type ReactNode, useContext, useState } from "react";
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -10,12 +16,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import {
-  isServer,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
-import { createContext, useContext, useState, type ReactNode } from "react";
 
 function makeQueryClient() {
   return new QueryClient({
@@ -27,7 +27,7 @@ function makeQueryClient() {
   });
 }
 
-let browserQueryClient: QueryClient | undefined = undefined;
+let browserQueryClient: QueryClient | undefined;
 
 function getQueryClient() {
   if (isServer) {

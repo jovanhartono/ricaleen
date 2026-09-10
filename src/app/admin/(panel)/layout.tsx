@@ -1,6 +1,6 @@
+import type { ReactNode } from "react";
 import { AdminSidebar } from "@/components/admin-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import type { ReactNode } from "react";
 
 export default async function AdminLayout({
   children,

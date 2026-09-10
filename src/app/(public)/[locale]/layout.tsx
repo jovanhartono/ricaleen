@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "../../globals.css";
-import { Toaster } from "@/components/ui/sonner";
-import Providers from "@/app/providers";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
-import { Header } from "@/app/(public)/[locale]/header";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { Footer } from "@/app/(public)/[locale]/footer";
+import { Header } from "@/app/(public)/[locale]/header";
+import Providers from "@/app/providers";
 import { FloatingWhatsapp } from "@/components/floating-whatsapp";
+import { Toaster } from "@/components/ui/sonner";
+import { routing } from "@/i18n/routing";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat-sans",

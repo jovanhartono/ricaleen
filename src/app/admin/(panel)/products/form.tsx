@@ -1,11 +1,32 @@
 "use client";
 
+import {
+  DndContext,
+  type DragEndEvent,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import { SortableContext, useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { upload } from "@vercel/blob/client";
+import { LoaderIcon, TrashIcon } from "lucide-react";
+import { memo, useState } from "react";
+import {
+  type FieldArrayWithId,
+  type UseFieldArrayMove,
+  type UseFieldArrayRemove,
+  useFieldArray,
+  useFormContext,
+} from "react-hook-form";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -20,27 +41,6 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ProductFormValues } from "@/lib/schema/product";
 import { deleteThumbnail, getCategories } from "@/service/admin";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { upload } from "@vercel/blob/client";
-import { LoaderIcon, TrashIcon } from "lucide-react";
-import { memo, useState } from "react";
-import {
-  useFieldArray,
-  useFormContext,
-  type FieldArrayWithId,
-  type UseFieldArrayMove,
-  type UseFieldArrayRemove,
-} from "react-hook-form";
-import { toast } from "sonner";
-import {
-  useSensors,
-  useSensor,
-  PointerSensor,
-  DndContext,
-  type DragEndEvent,
-} from "@dnd-kit/core";
-import { SortableContext, useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 
 export function ProductForm({
   handleOnSubmit,

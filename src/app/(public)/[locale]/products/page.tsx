@@ -1,8 +1,8 @@
+import Image from "next/image";
+import { getLocale, getTranslations } from "next-intl/server";
 import { ProductCard } from "@/app/(public)/[locale]/products/product-card";
 import { Link } from "@/i18n/navigation";
 import { getCategories, getProducts, type ProductDTO } from "@/service/admin";
-import { getLocale, getTranslations } from "next-intl/server";
-import Image from "next/image";
 
 export default async function ProductsPage({
   searchParams,
@@ -78,7 +78,7 @@ export default async function ProductsPage({
           filteredEntries.map(([categoryName, products], index) => (
             <div key={index} className="space-y-6">
               <div className="flex h-12 items-center rounded bg-brand px-4 sm:h-16">
-                <h2 className="text-lg font-semibold text-brand-foreground sm:text-xl">
+                <h2 className="font-semibold text-brand-foreground text-lg sm:text-xl">
                   {categoryName}
                 </h2>
               </div>

@@ -1,16 +1,16 @@
-import {
-  loginSchema,
-  type Credentials as CredentialsType,
-} from "@/lib/schema/authentication";
+import bcrypt from "bcryptjs";
+import { eq } from "drizzle-orm";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import createIntlMiddleware from "next-intl/middleware";
 import { ZodError } from "zod";
 import { db } from "@/db";
 import { usersTable } from "@/db/schema";
-import { eq } from "drizzle-orm";
-import bcrypt from "bcryptjs";
-import createIntlMiddleware from "next-intl/middleware";
 import { routing } from "@/i18n/routing";
+import {
+  type Credentials as CredentialsType,
+  loginSchema,
+} from "@/lib/schema/authentication";
 
 const getUserByCredentials = async (credentials: CredentialsType) => {
   const users = await db
